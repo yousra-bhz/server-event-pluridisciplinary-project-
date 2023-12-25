@@ -1,18 +1,26 @@
 const express = require('express');
 const cors = require('cors');
-const nodemailer = require('nodemailer');
-const bcrypt = require('bcrypt');
 const morgan = require('morgan');
-const app = express();
-const ConnectToDb = require('./config/connectTodb');
+const mongoose = require('mongoose');
 const route = require('./routes/route');
+const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan('tiny'));
 
-app.use('/api' , route)
-app.listen(5000 , () =>{
-    console.log('you are runing the server on port 5000');
-    ConnectToDb();
-    console.log('hey')
+
+const ConncettoDb = () =>{
+    try{
+        mongoose.connect("mongodb+srv://yousrabouhrizdaidj:OLlm1241HMYMbjvP@cluster0.6gzqz41.mongodb.net/?retryWrites=true&w=majority");
+        console.log('you are connected to the database')
+    }
+    catch{
+        console.log('error')
+    }
+     
+}
+app.listen(8000 , () =>{
+    console.log('hey');
+    ConncettoDb()
 })
+app.use('/api' , route);

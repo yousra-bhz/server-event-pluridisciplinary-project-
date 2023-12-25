@@ -1,11 +1,10 @@
-import isEmail from 'validator/lib/isEmail';
-
-const User = require('../models/user');
-const validator = require('validator');
-export async function register(req , res) {
-    const  { username ,email ,password , confirmpassword} = req.body;
+const User = require('../models/user.js')
+const validator = require('validator')
+const mongoose = require('mongoose')
+const register = async(req , res) => {
+    const  { username ,email ,password } = req.body;
     //check the existance of the user 
-    if (!email || !username || !password ||!confirmpassword){
+    if (!email || !username || !password ){
         //one or more thant one field is missing
         res.json({
             status : "FAILED",
@@ -24,14 +23,7 @@ export async function register(req , res) {
             message : "the password is not strong "
         });
     }
-    else if (password !== confirmpassword){
-        res.json({
-            status : "FAILED",
-            message : "the confirmpassword is not matching "
-        });
-    } 
-
-    User.findOne({email}).then((userexist) => {
+    await  User.findOne({email : email}).then((userexist) => {
         if(userexist){
             res.json({
                 status : "FAILED",
@@ -64,36 +56,4 @@ export async function register(req , res) {
     })
 }
 
-export async function login(req , res) {
-    
-}
-
-export async function getUser(req , res) {
-    
-}
-
-
-export async function updateUser(req , res) {
-    
-}
-
-
-export async function generateOTP(req , res) {
-    
-}
-
-
-export async function verifyOTP(req , res) {
-    
-}
-
-
-export async function createResetSession(req , res) {
-    
-}
-
-
-export async function resetPassword(req , res) {
-    
-}
-
+ module.exports = register           

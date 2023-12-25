@@ -1,24 +1,35 @@
-import {Router} from 'express';
-const router = Router();
+const express = require('express')
+const router = express.Router();
 //import all controllers
-import * as controller from '../controllers/appController'
+const register = require('../controllers/register');
+const login = require('../controllers/login');
+const getUser = require('../controllers/getUser');
+const updateUser = require('../controllers/updateUser');
+const generateOTP = require('../controllers/generateOTP');
+const verifyOTP = require('../controllers/verifyOTP');
+const createResetSession = require('../controllers/createResetSession');
+const resetPassword = require('../controllers/resetPassword');
+const Auth = require('../middleware/auth')
+const Locals = require('../middleware/locals')
 
 
 //POST ROUTES
-router.route('/register').post(controller.register)
+router.route('/register').post(register)
 // router.route('/registerMail').post((req , res) => { 
 // })//send the mail
 router.route('/euthenticate').post((req , res) => {
     res.end()
 })
-router.route('/login').post(controller.login)
+router.route('/login').post(login)
 
 //GET METHODS
-router.route('/users/:username').get(controller.getUser)
-router.route('/generateOTP').get(controller.generateOTP)
-router.route('/verifyOTP').get(controller.verifyOTP)
-router.route('/createResetSession').get(controller.createResetSession)
+router.route('/users/:username').get(getUser)
+router.route('/generateOTP').get( Locals, generateOTP)
+router.route('/verifyOTP').get(verifyOTP)
+router.route('/createResetSession').get(createResetSession)
 
 //PUT METHODS
-router.route('/updateUser').put(controller.updateUser)
-router.route('/resetPassword').put(controller.resetPassword)
+router.route('/updateUser').put(updateUser)
+router.route('/resetPassword').put(Auth,resetPassword)
+
+module.exports = router;

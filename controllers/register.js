@@ -1,6 +1,7 @@
-const User = require('../models/user.js')
+const mongoose = require('mongoose');
 const validator = require('validator')
-const mongoose = require('mongoose')
+const User = require('../models/user.js');
+const bcrypt= require('bcrypt')
 const register = async(req , res) => {
     const  { username ,email ,password } = req.body;
     //check the existance of the user 
@@ -23,7 +24,7 @@ const register = async(req , res) => {
             message : "the password is not strong "
         });
     }
-    await  User.findOne({email : email}).then((userexist) => {
+    await  User.findOne({email}).then((userexist) => {
         if(userexist){
             res.json({
                 status : "FAILED",
@@ -32,22 +33,38 @@ const register = async(req , res) => {
         }
         //if the user does not exist we create it and we save it in the database
         else{
-            const newUser = new User ({
-                email , 
-                username,
-                password
-            })
-        newUser.save().then(() => {
-            res.json(
-                {
-                    status : "Succes",
-                    message : "user saved succesfully"
+            bcrypt.hash(password , 10).then((hashedpass) => {
+                if(!hashedpass){
+                    res.json('error while trying to hash the password')
                 }
-            )
-        })
-        .catch((error) => {
-                console.log(error , "an error has occured when trying to save the user")
-        })
+                else{
+                    const newUser = new User ({
+                        email , 
+                        username,
+                        password : hashedpass
+                    })
+                newUser.save().then(() => {
+                    res.json(
+                        {
+                            status : "Succes",
+                            message : "user saved succesfully"
+                        }
+                    )
+                })
+                .catch((error) => {
+                    if (error.code === 11000 && error.keyPattern && error.keyValue) {
+                        const fieldName = Object.keys(error.keyPattern)[0];
+                        const duplicateValue = error.keyValue[fieldName];
+                        res.status(400).json({ message: `Duplicate key error: ${fieldName} '${duplicateValue}' already exists.` });
+                      } else {
+                        // Handle other errors
+                        console.error('An error occurred when trying to save the user:', error);
+                        res.status(500).json({ message: 'Internal server error' });
+                      }
+                })
+                }
+            })
+            
 
         }
     })

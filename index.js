@@ -8,19 +8,16 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('tiny'));
 
+// Connection URI for MongoDB, replace 'your_database_uri' and 'your_database_name' with your actual values
 
-const ConncettoDb = () =>{
-    try{
-        mongoose.connect("mongodb+srv://yousrabouhrizdaidj:OLlm1241HMYMbjvP@cluster0.6gzqz41.mongodb.net/?retryWrites=true&w=majority");
-        console.log('you are connected to the database')
-    }
-    catch{
-        console.log('error')
-    }
-     
+function ConnecttoDb() {
+const uri = 'mongodb://127.0.0.1:27017/your_database_name';
+
+mongoose.connect(uri).then(() => console.log('you are connected to the databse'));
 }
-app.listen(8000 , () =>{
-    console.log('hey');
-    ConncettoDb()
-})
-app.use('/api' , route);
+
+app.listen(8000, () => {
+    ConnecttoDb();
+    console.log('Server is running on port 8000');
+});
+app.use(route);

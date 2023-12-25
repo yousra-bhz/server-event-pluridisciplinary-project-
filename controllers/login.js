@@ -1,12 +1,14 @@
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt')
 const ENV = require('../config')
+const User = require('../models/user')
+const JWTsecret = "NQ2VDian0W9dx0OSHSXQpIGgBA1uf6KYKlYajidiKBs=";
 
 
-
-const  login = async(req, res) =>{
+const login = async (req, res) => {
     const { email, password } = req.body;
-    
+
     if (!email || !password) {
         return res.json({
             status: "FAILED",
@@ -22,36 +24,34 @@ const  login = async(req, res) =>{
     User.findOne({ email })
         .then((userExist) => {
             if (!userExist) {
-                res.json({
+                return res.json({
                     status: "FAILED",
                     error: "This user does not exist. Do you want to register?"
                 });
             } else {
-                bcrypt.compare(password, userExist.password)
+                    bcrypt.compare(password, userExist.password)
                     .then((passmatch) => {
                         if (!passmatch) {
-                            res.json({
+                            return res.json({
                                 status: "FAILED",
                                 error: "The password does not match this email"
                             });
                         } else {
-                            res.json({
-                                status: "SUCCESS",
-                                message: "Logged in successfully"
-                            });
                             const token = jwt.sign({
-                                        userId :userExist._id,
-                                        username : userExist.username
-                            } , ENV.JWT_SECRET , {expireIn : "24h"});
-                            return res.status(200).send({
-                                msg : "yes",
-                                username : userExist.username,
+                                userId: userExist._id,
+                                username: userExist.username
+                            }, JWTsecret, { expiresIn: "24h" });
+
+                            return res.status(200).json({
+                                status: "SUCCESS",
+                                message: "Logged in successfully",
+                                username: userExist.username,
                                 token
-                            })
+                            });
                         }
                     })
                     .catch((error) => {
-                        res.json({
+                        return res.json({
                             status: "FAILED",
                             error: "Error comparing passwords"
                         });
@@ -59,11 +59,12 @@ const  login = async(req, res) =>{
             }
         })
         .catch((error) => {
-            res.json({
+            console.log(error);
+            return res.json({
                 status: "FAILED",
                 error: "Error finding user"
             });
         });
-}
+};
 
-module.exports = login
+module.exports = login;

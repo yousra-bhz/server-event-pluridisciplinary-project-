@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const User = require('../models/user')
+const User = require('../models/user');
+
 //we can update user only after validating this user this is why we are calling the auth function to verify if the user is validate or not
 //auth function :
 //after the user is registered and after the user is loged in we are generating a token (string)

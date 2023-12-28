@@ -9,6 +9,7 @@ const generateOTP = require('../controllers/generateOTP');
 const verifyOTP = require('../controllers/verifyOTP');
 const createResetSession = require('../controllers/createResetSession');
 const resetPassword = require('../controllers/resetPassword');
+const Mailer = require('../controllers/mailer');
 const verifyUser = require('../middleware/verifyUser')
 //const Auth = require('../middleware/auth')
 const Locals = require('../middleware/locals')
@@ -16,8 +17,7 @@ const Locals = require('../middleware/locals')
 
 //POST ROUTES
 router.route('/register').post(register)
-// router.route('/registerMail').post((req , res) => { 
-// })//send the mail
+router.route('/registerMail').post(Mailer)
 router.route('/euthenticate').post((req , res) => {
     res.end()
 })

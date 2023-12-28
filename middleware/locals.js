@@ -3,7 +3,6 @@ const Locals = (req , res , next) => {
         OTP : null,
         nextSession : false
     }
-
     next ()
 }
 

@@ -10,6 +10,9 @@ const verifyOTP = require('../controllers/verifyOTP');
 const createResetSession = require('../controllers/createResetSession');
 const resetPassword = require('../controllers/resetPassword');
 const Mailer = require('../controllers/mailer');
+const posting = require('../controllers/addPost')
+const users = require('../controllers/users')
+const posts = require('../controllers/posts')
 const verifyUser = require('../middleware/verifyUser')
 //const Auth = require('../middleware/auth')
 const Locals = require('../middleware/locals')
@@ -21,14 +24,16 @@ router.route('/registerMail').post(Mailer)
 router.route('/euthenticate').post((req , res) => {
     res.end()
 })
-router.route('/login').post(login)
+router.route('/login').post(login);
+router.route('/addPost').post(posting)
 
 //GET METHODS
 router.route('/users/:username').get(getUser)
 router.route('/generateOTP').get(verifyUser ,Locals, generateOTP)
 router.route('/verifyOTP').get( verifyUser ,verifyOTP)
 router.route('/createResetSession').get(createResetSession)
-
+router.route('/gettingusers').get(users)
+router.route('/gettingposts').get(posts)
 //PUT METHODS
 //router.route('/updateUser').put(updateUser)
 router.route('/resetPassword').put( verifyUser ,resetPassword)

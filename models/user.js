@@ -18,7 +18,7 @@ const UserSchema = new Schema ({
         required : [true , "please provide a password"],
         unique : false
     },
-    prefOne : {
+    preOne : {
         type : String,
     },
     preTwo : {

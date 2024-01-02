@@ -4,7 +4,7 @@ const User = require('../models/user.js');
 const bcrypt = require('bcrypt');
 
 const register = async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, email, password, preOne, preTwo, preThree } = req.body;
 
     try {
         // Check the existence of the user
@@ -46,7 +46,10 @@ const register = async (req, res) => {
         const newUser = new User({
             email,
             username,
-            password: hashedPass
+            password: hashedPass,
+            preOne,
+            preTwo,
+            preThree
         });
 
         await newUser.save();

@@ -1,8 +1,8 @@
 const Post = require('../models/post.js')
 const addPost  = (req , res) => {
-    const {date,place,organizer,link,category} = req.body;
+    const {date,place,link,category} = req.body;
 
-    if(!date ||!place || !organizer || !link ||!category){
+    if(!date ||!place || !link ||!category){
         res.json({
             status : "FAILED",
             message : "please provide all fields"
@@ -12,16 +12,13 @@ const addPost  = (req , res) => {
     const AddedPost = new Post ({
         date,
         place,
-        organizer,
         link,
-        category
+        category,
+        organizer:req.user
     })
-    
     AddedPost.save().then(() =>  {
-        res.json({
-            status : "SUCCES",
-            message : "your request is sent to the admin"
-        })
+        res.json({AddedPost})
+        
     })
         .catch((error) => {
             console.log(error);

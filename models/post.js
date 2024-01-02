@@ -12,7 +12,8 @@ const PostModel = new mongoose.Schema({
         unique : false
     },
     organizer : {
-        type: String,
+        type: ObjectId,
+        ref :'User'
     },
     category :{
         type : String,

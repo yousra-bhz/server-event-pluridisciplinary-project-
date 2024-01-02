@@ -1,7 +1,9 @@
 const Post = require('../models/post')
 const Getposts = async(req , res) => {
-        const posts = await Post.find();
+       Post.find().populate("organizer").then((posts) => {
         res.json({posts})
+       })
+       .catch((error) => console.log(error))
 }
 
 module.exports =  Getposts

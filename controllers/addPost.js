@@ -1,8 +1,8 @@
 const Post = require('../models/post.js')
 const addPost  = (req , res) => {
-    const {date,place,organizer,link} = req.body;
+    const {date,place,organizer,link,category} = req.body;
 
-    if(!date ||!place || !organizer || !link){
+    if(!date ||!place || !organizer || !link ||!category){
         res.json({
             status : "FAILED",
             message : "please provide all fields"
@@ -13,7 +13,8 @@ const addPost  = (req , res) => {
         date,
         place,
         organizer,
-        link
+        link,
+        category
     })
     
     AddedPost.save().then(() =>  {

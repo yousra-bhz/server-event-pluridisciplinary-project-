@@ -10,7 +10,7 @@ const getUser = async(req , res) =>{
         User.findOne({username}).then((userExist) =>{
             if(userExist){
                 const {password, ...rest } = Object.assign({} , userExist.toJSON())
-                return res.status(201).send(userExist)
+                return res.status(201).send(rest)
             }
         else {
             return res.status(501).send({error : 'username does no exist in the database' })

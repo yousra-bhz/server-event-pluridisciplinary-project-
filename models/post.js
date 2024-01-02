@@ -1,20 +1,22 @@
 const mongoose = require('mongoose');
-
+const {ObjectId} = mongoose.Schema.Types
 const PostModel = new mongoose.Schema({
     date : {
         type : Date,
-        required : [true , "please provide a unique email"],
-        unique : true
+        required : [true , "please provide a date"],
+        unique : false
     },
     place : {
         type : String,
-        required : [true , "please provide a password"],
+        required : [true , "please provide the place"],
         unique : false
     },
     organizer : {
+        type: String,
+    },
+    category :{
         type : String,
-        required : [true , "please provide a password"],
-        unique : false
+        required : [true , "please provide the category of this post"],
     },
     isApprouved : {
         type : Boolean,

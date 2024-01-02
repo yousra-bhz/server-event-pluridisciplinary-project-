@@ -14,8 +14,9 @@ const posting = require('../controllers/addPost')
 const users = require('../controllers/users')
 const posts = require('../controllers/posts')
 const verifyUser = require('../middleware/verifyUser')
-//const Auth = require('../middleware/auth')
+const Auth = require('../middleware/auth')
 const Locals = require('../middleware/locals')
+
 
 
 //POST ROUTES
@@ -25,7 +26,7 @@ router.route('/euthenticate').post((req , res) => {
     res.end()
 })
 router.route('/login').post(login);
-router.route('/addPost').post(posting)
+router.route('/addPost').post(Auth ,posting)
 
 //GET METHODS
 router.route('/users/:username').get(getUser)
@@ -34,6 +35,9 @@ router.route('/verifyOTP').get( verifyUser ,verifyOTP)
 router.route('/createResetSession').get(createResetSession)
 router.route('/gettingusers').get(users)
 router.route('/gettingposts').get(posts)
+router.route('/protected').get(Auth ,(req,res) => {
+    res.json('you you and youuuuuuuu')
+})
 //PUT METHODS
 //router.route('/updateUser').put(updateUser)
 router.route('/resetPassword').put( verifyUser ,resetPassword)

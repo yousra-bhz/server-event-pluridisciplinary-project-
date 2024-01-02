@@ -16,6 +16,7 @@ const posts = require('../controllers/posts')
 const getPost = require('../controllers/getPost')
 const Feed = require('../controllers/feedUser')
 const userPosts = require('../controllers/getUserPosts')
+const Approuve = require('../controllers/approuveEventByAdmin')
 const verifyUser = require('../middleware/verifyUser')
 const Auth = require('../middleware/auth')
 const Locals = require('../middleware/locals')
@@ -47,5 +48,6 @@ router.route('/yourPosts').get(Auth, userPosts)
 //PUT METHODS
 //router.route('/updateUser').put(updateUser)
 router.route('/resetPassword').put( verifyUser ,resetPassword)
+router.route('/approuveEvent/:id').put(Approuve)
 
 module.exports = router;

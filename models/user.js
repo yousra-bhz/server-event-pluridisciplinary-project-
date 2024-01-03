@@ -30,6 +30,11 @@ const UserSchema = new Schema ({
     warnings:{
         type :Number,
         default:0
+    },
+    phoneNumber:{
+        type:String,
+        default:"",
+        required:false
     }
 })
 

@@ -18,6 +18,7 @@ const Feed = require('../controllers/feedUser')
 const userPosts = require('../controllers/getUserPosts')
 const Approuve = require('../controllers/approuveEventByAdmin')
 const deletEvent = require('../controllers/deleteEvent')
+const AddPhoneNumber = require('../controllers/addPhoneNumber')
 
 //IMPORTING CONTROLLERS
 const verifyUser = require('../middleware/verifyUser')
@@ -34,6 +35,7 @@ router.route('/euthenticate').post((req , res) => {
 })
 router.route('/login').post(login);
 router.route('/addPost').post(Auth ,posting)
+router.route('/AddYourPhoneNumber').post(Auth,AddPhoneNumber)
 
 //GET METHODS
 router.route('/users/:username').get(getUser)

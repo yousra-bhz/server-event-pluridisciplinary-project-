@@ -24,7 +24,7 @@ const AddPhoneNumber = require('../controllers/addPhoneNumber')
 const verifyUser = require('../middleware/verifyUser')
 const Auth = require('../middleware/auth')
 const Locals = require('../middleware/locals')
-
+const AddEventConfirmation = require('../middleware/ConfirmationEmailPosting')
 
 
 //POST ROUTES
@@ -34,7 +34,7 @@ router.route('/euthenticate').post((req , res) => {
     res.end()
 })
 router.route('/login').post(login);
-router.route('/addPost').post(Auth ,posting)
+router.route('/addPost').post(Auth ,posting ) 
 router.route('/AddYourPhoneNumber').post(Auth,AddPhoneNumber)
 
 //GET METHODS

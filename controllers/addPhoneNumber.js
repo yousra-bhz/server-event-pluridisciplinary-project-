@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
 const User = require('../models/user')
 
-const AddPhoneNumber = () => {
+const AddPhoneNumber = (req , res) => {
         const {phoneNumber} = req.body
         const {userId} = req.user
         User.findOne({userId}).then((foundUser) => {
@@ -10,7 +9,11 @@ const AddPhoneNumber = () => {
             }
             else{
                 foundUser.phoneNumber = phoneNumber
-                foundUser.save().then(() => res.status(200).send('phone number added succesfully'))
+                foundUser.save().then(() => {
+                    res.status(200).send('phone number added succesfully');
+                    console.log(foundUser)
+                }
+                    )
                 .catch((err) => res.status(501).send('we could not save the changes'))
             }
         })

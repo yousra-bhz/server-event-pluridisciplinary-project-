@@ -17,6 +17,7 @@ const Auth = (req,res,next)=>{
          return   res.status(401).json({error:"you should be logged in"})
         }
         const {userId} = payload
+        console.log(payload)
         User.findById(userId).then(userdata=>{
             console.log(userdata)
             req.user = userdata

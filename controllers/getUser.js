@@ -1,13 +1,12 @@
-const mongoose = require('mongoose');
 const User = require('../models/user')
 const getUser = async(req , res) =>{
-    const {username} = req.params 
+    const {id} = req.params 
     try{
-    if(!username){
+    if(!id){
         return res.status(501).send({error : "invalid user name"})
     }
     else{
-        User.findOne({username}).then((userExist) =>{
+        User.findById(id).then((userExist) =>{
             if(userExist){
                 const {password, ...rest } = Object.assign({} , userExist.toJSON())
                 return res.status(201).send(rest)

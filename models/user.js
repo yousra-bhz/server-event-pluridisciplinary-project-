@@ -35,7 +35,29 @@ const UserSchema = new Schema ({
         type:String,
         default:"",
         required:false
+    },
+    likedEvents:[{
+           
     }
+    ],
+    follows:[
+        {
+            image:String,
+            username:String
+        }
+    ],
+    followers:[
+        {
+            image:String,
+            username:String
+        }
+    ],
+    notification:[
+        {
+            message:String,
+            image:String
+        }
+    ]
 })
 
 module.exports = mongoose.model("User" , UserSchema)

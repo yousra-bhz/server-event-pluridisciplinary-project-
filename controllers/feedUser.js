@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const Post = require('../models/post');
 
 const Feed = (req, res) => {
@@ -13,7 +12,7 @@ const Feed = (req, res) => {
     ],
   };
 
-  Post.find(query)
+  Post.find(query , {isApprouved : true})
     .then((posts) => {
       res.json({ posts });
     })

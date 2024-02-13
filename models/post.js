@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const {ObjectId} = mongoose.Schema.Types
 const PostModel = new mongoose.Schema({
     date : {
-        type : Date,
+        type : String,
         required : [true , "please provide a date"],
         unique : false
     },
@@ -30,6 +30,10 @@ const PostModel = new mongoose.Schema({
     link : {
         type : String,
         required : [true , "this link will redirect you to the form "],
+    },
+    sold :{
+        type:Boolean,
+        default : false
     }
 
 })

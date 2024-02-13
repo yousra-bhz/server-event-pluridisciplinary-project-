@@ -1,48 +1,55 @@
 const User = require('../models/user');
 
 const followUser = async (req, res) => {
-  try {
     const { _id } = req.user;
     const { id } = req.params;
 
-    const UserFollowing = await User.findById(_id);
-    const UserFollowed = await User.findById(id);
+    try {
+        const userFollowing = await User.findById(_id);
+        const userFollowed = await User.findById(id);
 
-    if (!UserFollowing ) {
-      return res.status(404).send('User not found');
+        if (!userFollowing) {
+            return res.status(404).send('User not found');
+        }
+
+        if (!userFollowed) {
+            return res.status(404).send('User1121 not found');
+        }
+
+        await User.findByIdAndUpdate(_id, {
+            $addToSet: {
+                follows: {
+                    id: id,
+                    username: userFollowed.username,
+                    image: userFollowed.img,
+                },
+            },
+        });
+
+        await User.findByIdAndUpdate(id, {
+            $addToSet: {
+                followers: {
+                    id: _id,
+                    username: userFollowing.username,
+                    image: userFollowing.img,
+                },
+            },
+            $push: {
+                notification: {
+                    image: userFollowing.img,
+                    message: `${userFollowing.username} has started following you`,
+                },
+            },
+        });
+
+        res.status(200).send('User followed successfully');
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
     }
-
-    if (!UserFollowed ) {
-        return res.status(404).send('User1121 not found');
-      }
-
-    await User.findByIdAndUpdate(_id, {
-      $push: {
-        follows: {
-          username: UserFollowed.username,
-          image: UserFollowed.img,
-        },
-      },
-    });
-
-    await User.findByIdAndUpdate(id, {
-      $push: {
-        followers: {
-          username: UserFollowing.username,
-          image: UserFollowing.img,
-        },
-        notification: {
-          image: UserFollowing.img,
-          message: `${UserFollowing.username} has started following you`,
-        },
-      },
-    });
-
-    res.status(200).send('User followed successfully');
-  } catch (error) {
-    console.log(error);
-    res.status(500).send('Internal Server Error');
-  }
 };
 
 module.exports = followUser;
+
+
+//By Using the addtoset function we assure that there is no duplicate followers or duplicate follows

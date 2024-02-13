@@ -26,6 +26,7 @@ const FollowUser = require('../controllers/follow')
 const LikedEvents = require('../controllers/showLikedEvents')
 const Follows = require('../controllers/showFollows')
 const Followers = require('../controllers/showFollowers')
+const Unfollow = require('../controllers/unfollow')
 
 //IMPORTING CONTROLLERS
 const verifyUser = require('../middleware/verifyUser')
@@ -71,6 +72,7 @@ router.route('/approuveEvent/:id').put(Approuve)
 router.route('/likeEvent/:id').put( Auth , LikeEvent)
 router.route('DislikeEvent/:id').put(Auth ,DisLikeEvent)
 router.route('/followuser/:id').put( Auth , FollowUser)
+router.route('/unfollowuser/:id').put(Auth , Unfollow)
 
 //DELETE METHODS
 router.route('/deletEvent/:id').delete(Auth , deletEvent)

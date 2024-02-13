@@ -1,16 +1,24 @@
 const User = require('../models/user');
 
-const showFollows = async(req , res) => {
-        const {userId} = req.user;
-        await User.findById(userId).then((userFound) => {
-                const follows = userFound.follows;
-                res.status(200).send({
-                    message : 'these are the accounts that you are following',
-                    follows
-                })
-        })
-        .catch((error) => res.status(404).send('we can not show the accounts that you are following'))
+const showFollows = async (req, res) => {
+    const { id } = req.user;
 
-}
+    try {
+        const userFound = await User.findById(id);
 
-module.exports = showFollows
+        if (!userFound) {
+            return res.status(404).send('User not found');
+        }
+
+        const follows = userFound.follows;
+        res.status(200).send({
+            message: 'These are the accounts that you are following',
+            follows
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+module.exports = showFollows;

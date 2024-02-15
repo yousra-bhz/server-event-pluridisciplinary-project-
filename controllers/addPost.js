@@ -3,9 +3,9 @@ const nodemailer = require('nodemailer');
 const Mailgen = require('mailgen');
 
 const addPost = (req, res) => {
-    const { date, place, link, category } = req.body;
+    const { title ,date, place, link, category } = req.body;
 
-    if (!date || !place || !link || !category) {
+    if (!date || !place || !link || !category || !title) {
         return res.json({
             status: "FAILED",
             message: "Please provide all fields"
@@ -17,6 +17,7 @@ const addPost = (req, res) => {
         place,
         link,
         category,
+        title,
         organizer: req.user
     });
 

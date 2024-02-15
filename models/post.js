@@ -19,6 +19,11 @@ const PostModel = new mongoose.Schema({
         type : String,
         required : [true , "please provide the category of this post"],
     },
+    title : {
+        type : String,
+        required : [true , "please provide a date"],
+        unique : false
+    },
     isApprouved : {
         type : Boolean,
         default :false

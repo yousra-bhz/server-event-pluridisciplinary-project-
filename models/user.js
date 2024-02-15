@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const {ObjectId} = mongoose.Schema.Types;
 
 
 const UserSchema = new Schema ({
@@ -36,20 +37,22 @@ const UserSchema = new Schema ({
         default:"",
         required:false
     },
-    likedEvents:[{
-           
-    }
+    likedEvents:[ 
+          {
+        type: ObjectId,
+        ref :'User'
+    },
     ],
     follows:[
         {
-            image:String,
-            username:String
+            id:ObjectId,
+           ref:"User",
         }
     ],
     followers:[
         {
-            image:String,
-            username:String
+            id:ObjectId,
+            ref:"User",
         }
     ],
     notification:[

@@ -3,12 +3,22 @@ const User = require('../models/user')
 const nodemailer = require('nodemailer');
 const Mailgen = require('mailgen');
 
-const ApprouveEventByAdmin = async() => {
+const ApprouveEventByAdmin = async(req , res) => {
         const {id} = req.params;
+        console.log(req.params)
 
         Post.findById(id).populate('organizer').then((foundevent) => {
             foundevent.isApprouved = true;
+            const organizer = foundevent.organizer;
+            console.log(organizer)
             foundevent.save().then(() => {
+                console.log(foundevent)
+                res.status(200).send('event approuved by admin check your email')
+                organizer.followers.forEach(follower => {
+                    User.findOneAndUpdate(follower.username , {
+                        $push : {notification : `${organizer.username} has published a new event `}
+                    })
+                });
                         const {username , email} = foundevent.organizer;
 
 
@@ -47,7 +57,7 @@ const ApprouveEventByAdmin = async() => {
                             const message = {
                                 from: "brandt22@ethereal.email",
                                 to: email,
-                                subject: "Event Confirmation",
+                                subject: "Event Approval",
                                 html: emailBody
                             };
 

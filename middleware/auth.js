@@ -14,13 +14,16 @@ const Auth = (req,res,next)=>{
     const token = authorization.replace("Bearer ","")
     jwt.verify(token,JWTsecret,(err,payload)=>{
         if(err){
-         return   res.status(401).json({error:"you should be logged in"})
+         return  
+          res.status(401).json({error:"you should be logged in"})
         }
+        console.log('payload');
+        console.log(payload);
         const {userId} = payload
-        console.log(payload)
         User.findById(userId).then(userdata=>{
-            console.log(userdata)
-            req.user = userdata
+            req.user = userdata;
+            console.log("lllllll")
+            console.log(req.user)
             next()
         })
         

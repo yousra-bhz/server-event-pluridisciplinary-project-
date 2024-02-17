@@ -38,7 +38,7 @@ const UserSchema = new Schema ({
         required:false
     },
     likedEvents:[ 
-          {
+        {
         type: ObjectId,
         ref:'Post'
     },
@@ -54,7 +54,8 @@ const UserSchema = new Schema ({
         }
     ],
     notification:[
-        {
+        {   
+            date : Date,
             message:String,
             image:String
         }

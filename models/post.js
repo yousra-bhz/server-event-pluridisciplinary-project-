@@ -39,7 +39,11 @@ const PostModel = new mongoose.Schema({
     sold :{
         type:Boolean,
         default : false
-    }
+    },
+    feedbacks: [{
+        usrname : String,
+        msg:String
+    }]
 
 })
 

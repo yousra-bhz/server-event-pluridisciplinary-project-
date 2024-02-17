@@ -27,6 +27,8 @@ const LikedEvents = require('../controllers/showLikedEvents')
 const Follows = require('../controllers/showFollows')
 const Followers = require('../controllers/showFollowers')
 const Unfollow = require('../controllers/unfollow')
+const FeedBack = require('../controllers/feedback')
+const Clear = require('../controllers/clearNotif')
 
 //IMPORTING CONTROLLERS
 const verifyUser = require('../middleware/verifyUser')
@@ -44,6 +46,7 @@ router.route('/euthenticate').post((req , res) => {
 router.route('/login').post(login);
 router.route('/addPost').post(Auth ,posting ) 
 router.route('/AddYourPhoneNumber').post(Auth,AddPhoneNumber)
+router.route('/AddFeedBack').post(Auth , FeedBack)
 
 //GET METHODS
 router.route('/users/:id').get(getUser)
@@ -73,6 +76,7 @@ router.route('/likeEvent/:id').put( Auth , LikeEvent)
 router.route('DislikeEvent/:id').put(Auth ,DisLikeEvent)
 router.route('/followuser/:id').put( Auth , FollowUser)
 router.route('/unfollowuser/:id').put(Auth , Unfollow)
+router.route('/clearNotif').put(Auth , Clear)
 
 //DELETE METHODS
 router.route('/deletEvent/:id').delete(Auth , deletEvent)

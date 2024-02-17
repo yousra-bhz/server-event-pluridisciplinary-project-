@@ -40,19 +40,17 @@ const UserSchema = new Schema ({
     likedEvents:[ 
           {
         type: ObjectId,
-        ref :'User'
+        ref:'Post'
     },
     ],
     follows:[
         {
             id:ObjectId,
-           ref:"User",
         }
     ],
     followers:[
         {
             id:ObjectId,
-            ref:"User",
         }
     ],
     notification:[

@@ -3,33 +3,34 @@ const User = require('../models/user');
 const UnfollowUser = async (req, res) => {
     const { _id } = req.user;
     const { id } = req.params;
-    console.log(req.params)
-    console.log(req.user)
 
     try {
-        const userFollowing = await User.findById(_id);
-        const userFollowed = await User.findById(id);
+        const userUnfollowing = await User.findById(_id);
+        const userUnfollowed = await User.findById(id);
 
-        if (!userFollowing ) {
+        if (!userUnfollowing) {
             return res.status(404).send('User not found');
         }
 
-        if (!userFollowed) {
-            return res.status(404).send('User not not found');
+        if (!userUnfollowed) {
+            return res.status(404).send('User not found');
         }
 
+        // Remove the userUnfollowed from the follows array of userUnfollowing
+        await User.findByIdAndUpdate(_id, {
+            $pull: { follows: userUnfollowed._id }
+        });
 
-        userFollowing.follows = userFollowing.follows.filter(follow => follow.username !== userFollowed.username);
-        userFollowed.followers = userFollowed.followers.filter(follower => follower.username !== userFollowing.username);
-
-        await userFollowing.save();
-        await userFollowed.save();
+        // Remove the userUnfollowing from the followers array of userUnfollowed
+        await User.findByIdAndUpdate(userUnfollowed._id, {
+            $pull: { followers: _id }
+        });
 
         await User.findByIdAndUpdate(id, {
             $push: {
                 notification: {
-                    image: userFollowing.img,
-                    message: `${userFollowing.username} has unfollowed you`,
+                    image: userUnfollowing.image,
+                    message: `${userUnfollowing.username} has unfollowed you`,
                 },
             },
         });

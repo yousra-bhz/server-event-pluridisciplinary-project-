@@ -7,7 +7,7 @@ const UserSchema = new Schema ({
     username : {
         type : String,
         required : [true , "please provide unique Username"],
-        unique : [true , "username exist"]
+        unique : [false]
     },
     email : {
         type : String,
@@ -45,12 +45,14 @@ const UserSchema = new Schema ({
     ],
     follows:[
         {
-            id:ObjectId,
+            type:ObjectId,
+            ref:'User'
         }
     ],
     followers:[
         {
-            id:ObjectId,
+            type:ObjectId,
+            ref:'User'
         }
     ],
     notification:[

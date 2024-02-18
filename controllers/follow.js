@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../models/user')
 
 const followUser = async (req, res) => {
     const { _id } = req.user;
@@ -8,31 +8,19 @@ const followUser = async (req, res) => {
         const userFollowing = await User.findById(_id);
         const userFollowed = await User.findById(id);
 
-        if (!userFollowing) {
+        if (!userFollowing || !userFollowed) {
             return res.status(404).send('User not found');
-        }
-
-        if (!userFollowed) {
-            return res.status(404).send('User1121 not found');
         }
 
         await User.findByIdAndUpdate(_id, {
             $addToSet: {
-                follows: {
-                    id: id,
-                    username: userFollowed.username,
-                    image: userFollowed.img,
-                },
+                follows: userFollowed._id,  // Directly add the ObjectId
             },
         });
 
         await User.findByIdAndUpdate(id, {
             $addToSet: {
-                followers: {
-                    id: _id,
-                    username: userFollowing.username,
-                    image: userFollowing.img,
-                },
+                followers: _id,  // Directly add the ObjectId
             },
             $push: {
                 notification: {
@@ -48,8 +36,8 @@ const followUser = async (req, res) => {
     }
 };
 
-module.exports = followUser;
 
+module.exports = followUser
 
 //By Using the addtoset function we assure that there is
 

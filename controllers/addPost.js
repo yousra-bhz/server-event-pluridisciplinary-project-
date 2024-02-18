@@ -5,7 +5,7 @@ const Mailgen = require('mailgen');
 const addPost = (req, res) => {
     const { title ,date, place, link, category } = req.body;
 
-    if (!date || !place || !link || !category || !title) {
+    if (!date || !place || !link || !category || !title ||!req.user) {
         return res.json({
             status: "FAILED",
             message: "Please provide all fields"

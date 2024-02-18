@@ -36,7 +36,6 @@ const followUser = async (req, res) => {
             },
             $push: {
                 notification: {
-                    image: userFollowing.img,
                     message: `${userFollowing.username} has started following you`,
                 },
             },

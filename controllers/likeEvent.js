@@ -2,28 +2,25 @@ const Post = require('../models/post');
 const User = require('../models/user');
 
 const LikeEvent = async(req , res) => {
-    const {userId} = req.user;
-    const {eventId} = req.params;
-    const Event = await Post.findById(eventId);
-    let NotifiedPerson = '';
-    if(Event){
-         NotifiedPerson = Event.organizer;
-    }
-    
-    const ActionPerson = await User.findById(userId)
+    const {_id , username} = req.user;
+    const {id} = req.params;
+    const EventNotif = await Post.findById(id).populate('organizer');
 
-    Post.findByIdAndUpdate(eventId , {
+    Post.findByIdAndUpdate(id , {
         $inc : {likes : 1}
     }).then(() => {
         console.log(Event);
-        User.findByIdAndUpdate(userId , {
-            $addToSet :{likedEvents :eventId}
+        User.findByIdAndUpdate(_id , {
+            $addToSet :{likedEvents :id}
         }).then(() => {
             res.status(200).send('this event is liked and added to your liked events')
 
             //send a notification to the org of the event
-            User.findByIdAndUpdate(NotifiedPerson , {
-                $push : {notification : `${ActionPerson.username} has liked your event ${eventId}`}
+            User.findByIdAndUpdate(EventNotif.organizer._id, {
+                $push : {notification : 
+                    {       
+                            message : `${username} has liked your event `,
+                    }}
             })
         })
         .catch((error) => {

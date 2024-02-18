@@ -57,9 +57,12 @@ const UserSchema = new Schema ({
         {   
             date : Date,
             message:String,
-            image:String
         }
-    ]
+    ],
+    image : {
+        type : String,
+        required:false,
+    }
 })
 
 module.exports = mongoose.model("User" , UserSchema)

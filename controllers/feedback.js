@@ -1,11 +1,11 @@
-const Event = require('../models/Event');
+const Post = require('../models/post')
 
 
 
 const sendFeedback = async (req,res)=>{
     try{
         const {username , msg , eventId}=req.params
-        Event.findByIdAndUpdate(
+        Post.findByIdAndUpdate(
             eventId,
             {
                 $push: { feedbacks: { 

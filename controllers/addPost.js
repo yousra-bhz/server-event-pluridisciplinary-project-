@@ -5,6 +5,7 @@ const Mailgen = require('mailgen');
 
 const addPost = (req, res) => {
     const { title ,date, place, link, category } = req.body;
+    const email = "bouhrizdaidjyousra@gmail.com"
 
     if (!date || !place || !link || !category || !title ||!req.user) {
         return res.json({
@@ -25,7 +26,11 @@ const addPost = (req, res) => {
     AddedPost.save()
         .then(() => {
             
-            console.log(AddedPost);
+            Admin.findOne({email : email}).then((admin) => {
+                                    admin.eventsPerDay ++ 
+                                    admin.eventsPerMonth ++
+                                    admin.eventsPerYear ++
+            })
 
             const { email, username } = req.user;
 

@@ -1,10 +1,11 @@
-const mongoose = require('mongoose');
 const validator = require('validator');
 const User = require('../models/user.js');
+const Admin = require('../models/admin')
 const bcrypt = require('bcrypt');
 
 const register = async (req, res) => {
     const { username, email, password, preOne, preTwo, preThree } = req.body;
+    
 
     try {
         // Check the existence of the user
@@ -52,12 +53,19 @@ const register = async (req, res) => {
             preThree
         });
 
-        await newUser.save();
+        await newUser.save().then(() => {
+            const emailAdmin = "bouhrizdaidjyousra@gmail.com"
+            res.json({
+                status: "Success",
+                message: "User saved successfully"
+            });
 
-        return res.json({
-            status: "Success",
-            message: "User saved successfully"
+            Admin.findOne({email : emailAdmin}).then((admin) => {
+                            admin.usersRegistered ++
+            })
         });
+
+        
     } catch (error) {
         console.error('An error occurred when trying to save the user:', error);
 

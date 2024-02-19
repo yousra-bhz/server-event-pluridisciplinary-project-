@@ -48,7 +48,7 @@ const PostModel = new mongoose.Schema({
     feedbacks: [{
         usrname : String,
         msg:String
-    }]
+    }],
 
 })
 

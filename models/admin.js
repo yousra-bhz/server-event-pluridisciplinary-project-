@@ -31,6 +31,11 @@ const AdminModel = new mongoose.Schema({
         eventsPerYear : {
             type : Number,
             default :0
+        },
+
+        usersRegistered : {
+            type : Number,
+            default :0
         }
 })
 

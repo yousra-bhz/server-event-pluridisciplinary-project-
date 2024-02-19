@@ -11,6 +11,11 @@ const PostModel = new mongoose.Schema({
         required : [true , "please provide the place"],
         unique : false
     },
+    localisation : {
+        type : String,
+        required : [true , "please provide a location for you event"],
+        unique : false
+    },
     organizer : {
         type: ObjectId,
         ref :'User'

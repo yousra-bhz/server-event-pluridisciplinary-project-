@@ -15,13 +15,6 @@ const LikeEvent = async(req , res) => {
         }).then(() => {
             res.status(200).send('this event is liked and added to your liked events')
 
-            //send a notification to the org of the event
-            User.findByIdAndUpdate(EventNotif.organizer._id, {
-                $push : {notification : 
-                    {       
-                            message : `${username} has liked your event `,
-                    }}
-            })
         })
         .catch((error) => {
             console.log(error);

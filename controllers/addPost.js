@@ -1,4 +1,5 @@
 const Post = require('../models/post.js');
+const Admin = require('../models/admin.js')
 const nodemailer = require('nodemailer');
 const Mailgen = require('mailgen');
 
@@ -23,6 +24,7 @@ const addPost = (req, res) => {
 
     AddedPost.save()
         .then(() => {
+            
             console.log(AddedPost);
 
             const { email, username } = req.user;

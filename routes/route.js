@@ -29,6 +29,8 @@ const Followers = require('../controllers/showFollowers')
 const Unfollow = require('../controllers/unfollow')
 const FeedBack = require('../controllers/feedback')
 const Clear = require('../controllers/clearNotif')
+const RegisterAdmin = require('../controllers/RegisterAdmin')
+const LogInAdmin = require('../controllers/loginAdmin')
 
 //IMPORTING CONTROLLERS
 const verifyUser = require('../middleware/verifyUser')
@@ -47,6 +49,8 @@ router.route('/login').post(login);
 router.route('/addPost').post(Auth ,posting ) 
 router.route('/AddYourPhoneNumber').post(Auth,AddPhoneNumber)
 router.route('/AddFeedBack').post(Auth , FeedBack)
+router.route('/RegisterAdmin').post(RegisterAdmin)
+router.route('/LogInAdmin').post(LogInAdmin)
 
 //GET METHODS
 router.route('/users/:id').get(getUser)

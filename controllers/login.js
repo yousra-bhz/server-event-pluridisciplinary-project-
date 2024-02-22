@@ -1,10 +1,10 @@
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
-const ENV = require('../config')
-const User = require('../models/user')
+const Admin = require('../models/admin')
+const User = require('../models/user');
+const admin = require('../models/admin');
 const JWTsecret = "NQ2VDian0W9dx0OSHSXQpIGgBA1uf6KYKlYajidiKBs=";
-
 
 const login = async (req, res) => {
     const { email, password } = req.body;
@@ -21,6 +21,37 @@ const login = async (req, res) => {
         });
     }
 
+    Admin.findOne({ email })
+        .then((adminexist) => {
+            bcrypt.compare(adminexist.password, password)
+                .then((match) => {
+                    if (match) {
+                        const token = jwt.sign({
+                            userId: userExist._id,
+                            username: userExist.username
+                        }, JWTsecret);
+                        res.status(200).send('admin logged in successfully')
+                        return res.status(200).json({
+                            status: "SUCCESS",
+                            message: "Logged in successfully",
+                            username: userExist.username,
+                            token
+                        });
+                    } else {
+                        console.log(error);
+                        res.status(500).send('admin cannot log in, incorrect password ')
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                    res.status(500).send('admin cannot log in, incorrect password ')
+                })
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(500).send('we cannot find the admin email, please try another email')
+        })
+
     User.findOne({ email })
         .then((userExist) => {
             if (!userExist) {
@@ -29,7 +60,7 @@ const login = async (req, res) => {
                     error: "This user does not exist. Do you want to register?"
                 });
             } else {
-                    bcrypt.compare(password, userExist.password)
+                bcrypt.compare(password, userExist.password)
                     .then((passmatch) => {
                         if (!passmatch) {
                             return res.json({
@@ -37,11 +68,14 @@ const login = async (req, res) => {
                                 error: "The password does not match this email"
                             });
                         } else {
+                            const { usersconnected } = admin
                             const token = jwt.sign({
                                 userId: userExist._id,
                                 username: userExist.username
                             }, JWTsecret);
 
+                            // inc users in the platform
+                            usersconnected++
                             return res.status(200).json({
                                 status: "SUCCESS",
                                 message: "Logged in successfully",

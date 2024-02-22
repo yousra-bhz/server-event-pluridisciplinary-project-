@@ -36,7 +36,14 @@ const AdminModel = new mongoose.Schema({
         usersRegistered : {
             type : Number,
             default :0
-        }
+        },
+        
+
+        usersConnected : {
+            type : Number,
+            default :0
+        },
+
 })
 
 

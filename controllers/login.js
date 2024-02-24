@@ -27,14 +27,14 @@ const login = async (req, res) => {
                 .then((match) => {
                     if (match) {
                         const token = jwt.sign({
-                            userId: userExist._id,
-                            username: userExist.username
+                            userId: adminexist._id,
+                            username: adminexist.username
                         }, JWTsecret);
                         res.status(200).send('admin logged in successfully')
                         return res.status(200).json({
                             status: "SUCCESS",
                             message: "Logged in successfully",
-                            username: userExist.username,
+                            username: adminexist.username,
                             token
                         });
                     } else {

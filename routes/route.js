@@ -29,8 +29,7 @@ const Followers = require('../controllers/showFollowers')
 const Unfollow = require('../controllers/unfollow')
 const FeedBack = require('../controllers/feedback')
 const Clear = require('../controllers/clearNotif')
-const RegisterAdmin = require('../controllers/RegisterAdmin')
-const LogInAdmin = require('../controllers/loginAdmin')
+const RefuseEventByAdmin = require('../controllers/refuseEvent')
 
 //IMPORTING CONTROLLERS
 const verifyUser = require('../middleware/verifyUser')
@@ -49,8 +48,8 @@ router.route('/login').post(login);
 router.route('/addPost').post(Auth ,posting ) 
 router.route('/AddYourPhoneNumber').post(Auth,AddPhoneNumber)
 router.route('/AddFeedBack').post(Auth , FeedBack)
-router.route('/RegisterAdmin').post(RegisterAdmin)
-router.route('/LogInAdmin').post(LogInAdmin)
+
+
 
 //GET METHODS
 router.route('/users/:id').get(getUser)
@@ -84,5 +83,6 @@ router.route('/clearNotif').put(Auth , Clear)
 
 //DELETE METHODS
 router.route('/deletEvent/:id').delete(Auth , deletEvent)
+router.route('/refuseEvent/:id').delete(RefuseEventByAdmin)
 
 module.exports = router;

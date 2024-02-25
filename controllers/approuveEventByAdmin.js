@@ -1,5 +1,6 @@
 const Post = require('../models/post');
 const User = require('../models/user')
+const Admin = require('../models/admin')
 const nodemailer = require('nodemailer');
 const Mailgen = require('mailgen');
 
@@ -8,11 +9,20 @@ const ApprouveEventByAdmin = async(req , res) => {
         console.log(req.params)
 
         Post.findById(id).populate('organizer').then((foundevent) => {
-            foundevent.isApprouved = true;
+            foundevent.isApprouved = "Approuved";
             const organizer = foundevent.organizer;
             console.log(organizer)
-            foundevent.save().then(() => {
+            foundevent.save().then(async () => {
                 console.log(foundevent)
+                const emailAdmin = "admin@gmail.com"
+                await Admin.findOne({email : emailAdmin}).then((admin) => {
+                    admin.eventsPerDay ++ 
+                    admin.eventsPerMonth ++
+                    admin.eventsPerYear++
+                    admin.save()
+                })
+                .catch((err) =>  console.log(err))
+
                 res.status(200).send('event approuved by admin check your email')
                 organizer.followers.forEach(follower => {
                     User.findOneAndUpdate(follower.username , {

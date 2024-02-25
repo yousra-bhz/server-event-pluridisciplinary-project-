@@ -30,8 +30,8 @@ const PostModel = new mongoose.Schema({
         unique : false
     },
     isApprouved : {
-        type : Boolean,
-        default :false
+        type : String,
+        default :""
     },
     likes : {
         type : Number,

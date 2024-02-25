@@ -54,7 +54,7 @@ const register = async (req, res) => {
         });
 
         await newUser.save().then(() => {
-            const emailAdmin = "bouhrizdaidjyousra@gmail.com"
+            const emailAdmin = "admin@gmail.com"
             res.json({
                 status: "Success",
                 message: "User saved successfully"
@@ -62,6 +62,7 @@ const register = async (req, res) => {
 
             Admin.findOne({email : emailAdmin}).then((admin) => {
                             admin.usersRegistered ++
+                            admin.save()
             })
         });
 

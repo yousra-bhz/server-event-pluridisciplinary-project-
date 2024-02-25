@@ -4,10 +4,10 @@ const nodemailer = require('nodemailer');
 const Mailgen = require('mailgen');
 
 const addPost = (req, res) => {
-    const { title ,date, place, link, category } = req.body;
+    const { title ,date, place, link, category , localisation} = req.body;
     
 
-    if (!date || !place || !link || !category || !title ||!req.user) {
+    if (!date || !place || !link || !category || !title ||!req.user ||!localisation) {
         return res.json({
             status: "FAILED",
             message: "Please provide all fields"
@@ -20,16 +20,18 @@ const addPost = (req, res) => {
         link,
         category,
         title,
+        localisation,
         organizer: req.user
     });
 
     AddedPost.save()
         .then(() => {
-            const emailAdmin = "bouhrizdaidjyousra@gmail.com"
+            const emailAdmin = "admin@gmail.com"
             Admin.findOne({email : emailAdmin}).then((admin) => {
                                     admin.eventsPerDay ++ 
                                     admin.eventsPerMonth ++
                                     admin.eventsPerYear ++
+                                    admin.save()
             })
 
             const { email, username } = req.user;

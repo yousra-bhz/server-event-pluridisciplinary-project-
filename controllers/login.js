@@ -20,39 +20,39 @@ const login = async (req, res) => {
             error: "Invalid email format"
         });
     }
+    
+    // Admin.findOne({ email })
+    //     .then((adminexist) => {
+    //         bcrypt.compare(adminexist.password, password)
+    //             .then((match) => {
+    //                 if (match) {
+    //                     const token = jwt.sign({
+    //                         userId: adminexist._id,
+    //                         username: adminexist.username
+    //                     }, JWTsecret);
+    //                     res.status(200).send('admin logged in successfully')
+    //                     return res.status(200).json({
+    //                         status: "SUCCESS",
+    //                         message: "Logged in successfully",
+    //                         username: adminexist.username,
+    //                         token
+    //                     });
+    //                 } else {
+    //                     console.log(error);
+    //                     res.status(500).send('admin cannot log in, incorrect password ')
+    //                 }
+    //             })
+    //             .catch((error) => {
+    //                 console.log(error);
+    //                 res.status(500).send('admin cannot log in, incorrect password ')
+    //             })
+    //     })
+    //     .catch((error) => {
+    //         console.log(error)
+    //         res.status(500).send('we cannot find the admin email, please try another email')
+    //     })
 
-    Admin.findOne({ email })
-        .then((adminexist) => {
-            bcrypt.compare(adminexist.password, password)
-                .then((match) => {
-                    if (match) {
-                        const token = jwt.sign({
-                            userId: adminexist._id,
-                            username: adminexist.username
-                        }, JWTsecret);
-                        res.status(200).send('admin logged in successfully')
-                        return res.status(200).json({
-                            status: "SUCCESS",
-                            message: "Logged in successfully",
-                            username: adminexist.username,
-                            token
-                        });
-                    } else {
-                        console.log(error);
-                        res.status(500).send('admin cannot log in, incorrect password ')
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                    res.status(500).send('admin cannot log in, incorrect password ')
-                })
-        })
-        .catch((error) => {
-            console.log(error)
-            res.status(500).send('we cannot find the admin email, please try another email')
-        })
-
-    User.findOne({ email })
+    User.findOne({ email : email })
         .then((userExist) => {
             if (!userExist) {
                 return res.json({
@@ -61,21 +61,25 @@ const login = async (req, res) => {
                 });
             } else {
                 bcrypt.compare(password, userExist.password)
-                    .then((passmatch) => {
+                    .then(async (passmatch) => {
                         if (!passmatch) {
                             return res.json({
                                 status: "FAILED",
                                 error: "The password does not match this email"
                             });
                         } else {
-                            const { usersconnected } = admin
+                            const emailAdmin = "admin@gmail.com"
+
+                            const adminou = await Admin.findOne({email : emailAdmin})
+                            
                             const token = jwt.sign({
                                 userId: userExist._id,
                                 username: userExist.username
                             }, JWTsecret);
 
                             // inc users in the platform
-                            usersconnected++
+                            adminou.usersConnected++
+                            adminou.save()
                             return res.status(200).json({
                                 status: "SUCCESS",
                                 message: "Logged in successfully",
@@ -85,6 +89,7 @@ const login = async (req, res) => {
                         }
                     })
                     .catch((error) => {
+                        console.log(error)
                         return res.json({
                             status: "FAILED",
                             error: "Error comparing passwords"

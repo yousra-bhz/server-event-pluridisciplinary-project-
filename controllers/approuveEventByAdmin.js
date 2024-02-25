@@ -8,7 +8,7 @@ const ApprouveEventByAdmin = async(req , res) => {
         console.log(req.params)
 
         Post.findById(id).populate('organizer').then((foundevent) => {
-            foundevent.isApprouved = true;
+            foundevent.isApprouved = "Approuved";
             const organizer = foundevent.organizer;
             console.log(organizer)
             foundevent.save().then(() => {

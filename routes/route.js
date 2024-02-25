@@ -4,7 +4,7 @@ const router = express.Router();
 const register = require('../controllers/register');
 const login = require('../controllers/login');
 const getUser = require('../controllers/getUser');
-const updateUser = require('../controllers/updateUser');
+const UpdateUser = require('../controllers/updateUser')
 const generateOTP = require('../controllers/generateOTP');
 const verifyOTP = require('../controllers/verifyOTP');
 const createResetSession = require('../controllers/createResetSession');
@@ -29,8 +29,8 @@ const Followers = require('../controllers/showFollowers')
 const Unfollow = require('../controllers/unfollow')
 const FeedBack = require('../controllers/feedback')
 const Clear = require('../controllers/clearNotif')
-const RegisterAdmin = require('../controllers/RegisterAdmin')
-const LogInAdmin = require('../controllers/loginAdmin')
+const RefuseEventByAdmin = require('../controllers/refuseEvent')
+
 
 //IMPORTING CONTROLLERS
 const verifyUser = require('../middleware/verifyUser')
@@ -49,8 +49,7 @@ router.route('/login').post(login);
 router.route('/addPost').post(Auth ,posting ) 
 router.route('/AddYourPhoneNumber').post(Auth,AddPhoneNumber)
 router.route('/AddFeedBack').post(Auth , FeedBack)
-router.route('/RegisterAdmin').post(RegisterAdmin)
-router.route('/LogInAdmin').post(LogInAdmin)
+
 
 //GET METHODS
 router.route('/users/:id').get(getUser)
@@ -65,7 +64,7 @@ router.route('/protected').get(Auth ,(req,res) => {
 router.route('/feed').get(Auth , Feed)
 router.route('/posts/:postId').get(getPost)
 router.route('/yourPosts').get(Auth, userPosts)
-router.route('/waitingPosts').get(Auth , WaitingPost)
+router.route('/waitingPosts').get(WaitingPost)
 router.route('/likedEvents').get(Auth , LikedEvents)
 router.route('/yourFollows').get(Auth , Follows)
 router.route('/yourFollowers').get(Auth , Followers)
@@ -81,8 +80,10 @@ router.route('DislikeEvent/:id').put(Auth ,DisLikeEvent)
 router.route('/followuser/:id').put( Auth , FollowUser)
 router.route('/unfollowuser/:id').put(Auth , Unfollow)
 router.route('/clearNotif').put(Auth , Clear)
+router.route('/updateProfile').put(Auth , UpdateUser)
 
 //DELETE METHODS
 router.route('/deletEvent/:id').delete(Auth , deletEvent)
+router.route('/RefuseEvent/:id').delete(RefuseEventByAdmin)
 
 module.exports = router;

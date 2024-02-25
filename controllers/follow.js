@@ -24,6 +24,7 @@ const followUser = async (req, res) => {
             },
             $push: {
                 notification: {
+                    date : Date.now(),
                     message: `${userFollowing.username} has started following you`,
                 },
             },

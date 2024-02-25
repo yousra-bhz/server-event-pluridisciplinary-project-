@@ -1,6 +1,6 @@
 const Post = require('../models/post')
 const UserPosts = (req , res) => { 
-        Post.find({organizer:req.user._id , isApprouved:true}).then((posts) => {
+        Post.find({organizer:req.user._id , isApprouved:"Approuved"}).then((posts) => {
             res.json({posts})
         })
         .catch(err =>  console.log(err))

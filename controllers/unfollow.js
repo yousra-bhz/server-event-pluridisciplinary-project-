@@ -29,7 +29,7 @@ const UnfollowUser = async (req, res) => {
         await User.findByIdAndUpdate(id, {
             $push: {
                 notification: {
-                    image: userUnfollowing.image,
+                    date : Date.now(),
                     message: `${userUnfollowing.username} has unfollowed you`,
                 },
             },

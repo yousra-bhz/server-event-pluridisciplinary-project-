@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt');
 
 const register = async (req, res) => {
     const { username, email, password, preOne, preTwo, preThree } = req.body;
-    
 
     try {
         // Check the existence of the user
@@ -53,19 +52,21 @@ const register = async (req, res) => {
             preThree
         });
 
-        await newUser.save().then(() => {
-            const emailAdmin = "bouhrizdaidjyousra@gmail.com"
+        await newUser.save().then(async () => {
+            const emailAdmin = "admin@gmail.com";
             res.json({
                 status: "Success",
                 message: "User saved successfully"
             });
 
-            Admin.findOne({email : emailAdmin}).then((admin) => {
-                            admin.usersRegistered ++
-            })
+            const admin = await Admin.findOne({ email: emailAdmin });
+
+            if (admin) {
+                admin.usersRegistered++;
+                await admin.save();
+            }
         });
 
-        
     } catch (error) {
         console.error('An error occurred when trying to save the user:', error);
 

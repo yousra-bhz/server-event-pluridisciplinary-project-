@@ -1,4 +1,5 @@
 const User = require('../models/user')
+//WORKING
 const getUser = async(req , res) =>{
     const {id} = req.params 
     try{

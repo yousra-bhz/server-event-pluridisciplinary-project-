@@ -4,6 +4,8 @@ const Admin = require('../models/admin')
 const nodemailer = require('nodemailer');
 const Mailgen = require('mailgen');
 
+//WORKING
+
 const ApprouveEventByAdmin = async(req , res) => {
         const {id} = req.params;
         console.log(req.params)

@@ -1,5 +1,5 @@
 const User = require('../models/user');
-
+//WORKING
 const showFollowers = async(req , res) => {
         const {userId} = req.user;
         await User.findById(userId).then((userFound) => {

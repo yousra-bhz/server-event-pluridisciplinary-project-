@@ -1,5 +1,7 @@
 const User = require('../models/user'); // Assuming User model is correct
 
+
+//NOT TESTED YET
 const deleteNotification = async () => {
     try {
         const users = await User.find();

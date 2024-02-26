@@ -1,21 +1,29 @@
 const Post = require('../models/post')
 
 
+//WORKING
+
+
 
 const sendFeedback = async (req,res)=>{
     try{
-        const {username , msg , eventId}=req.params
+        const {username} = req.user;
+        const {message} = req.body;
+        const { id }= req.params
         Post.findByIdAndUpdate(
-            eventId,
+            id,
             {
                 $push: { feedbacks: { 
                     username: username,
-                    message:msg 
+                    message:message 
                 }
             }
+        }).then(() => {
+            console.log('feedback added successfully:');
+            res.status(200).send('feedback added successfully');
         })
-        console.log('feedback added successfully:', newname);
-        res.status(200).send('feedback added successfully');
+        .catch((err) => console.log(err))
+        
 
 
     }catch(error){

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Post = require('../models/post')
+//WORKING
 
 const getEvent = (req , res) => {
     const {postId} = req.params;

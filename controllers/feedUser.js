@@ -1,5 +1,5 @@
 const Post = require('../models/post');
-
+//WORKING
 const Feed = (req, res) => {
   const { preOne, preTwo, preThree } = req.user;
 

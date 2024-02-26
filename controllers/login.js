@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
 const JWTsecret = "NQ2VDian0W9dx0OSHSXQpIGgBA1uf6KYKlYajidiKBs=";
+//WORKING
 
 
 const login = async (req, res) => {
@@ -20,9 +21,14 @@ const login = async (req, res) => {
         });
     }
 
-    if (email === "admin@gmail.com" && password === "Admin"){
-        console.log("this is the account of the admin");
-        res.status(200).send('admin logged in succefully');
+    if (email === "admin@gmail.com"){
+        if(password === "Admin"){
+            console.log("this is the account of the admin");
+            return res.status(200).send('admin logged in succefully');
+        }
+        else {
+            return res.status(501).send('it is not the right password for the admin ');
+        }
     }
 
     User.findOne({ email })

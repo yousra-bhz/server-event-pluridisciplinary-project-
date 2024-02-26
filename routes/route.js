@@ -47,7 +47,7 @@ router.route('/euthenticate').post((req , res) => {
 router.route('/login').post(login);
 router.route('/addPost').post(Auth ,posting ) 
 router.route('/AddYourPhoneNumber').post(Auth,AddPhoneNumber)
-router.route('/AddFeedBack').post(Auth , FeedBack)
+router.route('/AddFeedBack/:id').post(Auth , FeedBack)
 
 
 
@@ -64,7 +64,7 @@ router.route('/protected').get(Auth ,(req,res) => {
 router.route('/feed').get(Auth , Feed)
 router.route('/posts/:postId').get(getPost)
 router.route('/yourPosts').get(Auth, userPosts)
-router.route('/waitingPosts').get(Auth , WaitingPost)
+router.route('/waitingPosts').get(WaitingPost)
 router.route('/likedEvents').get(Auth , LikedEvents)
 router.route('/yourFollows').get(Auth , Follows)
 router.route('/yourFollowers').get(Auth , Followers)
@@ -76,7 +76,7 @@ router.route('/yourFollowers').get(Auth , Followers)
 router.route('/resetPassword').put( verifyUser ,resetPassword)
 router.route('/approuveEvent/:id').put(Approuve)
 router.route('/likeEvent/:id').put( Auth , LikeEvent)
-router.route('DislikeEvent/:id').put(Auth ,DisLikeEvent)
+router.route('dislike/:id').put(Auth , DisLikeEvent)
 router.route('/followuser/:id').put( Auth , FollowUser)
 router.route('/unfollowuser/:id').put(Auth , Unfollow)
 router.route('/clearNotif').put(Auth , Clear)

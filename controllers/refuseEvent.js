@@ -3,7 +3,7 @@ const User = require('../models/user');
 const Admin = require('../models/admin');
 const nodemailer = require('nodemailer');
 const Mailgen = require('mailgen')
-
+//WORKING
 
 //steps:
 //find event by id
@@ -18,12 +18,10 @@ const Mailgen = require('mailgen')
 //delete all organizer's events
 const RefuseEvent = async (req, res) => {
     const { id } = req.params;
-    console.log(id)
     try {
         const event = await Post.findById(id).populate('organizer');
         if (event) {
             if (event.isApprouved === "") {
-                console.log(event)
                 const organizer = event.organizer;
                 const {email , username } = organizer;
                 // Save the organizer information

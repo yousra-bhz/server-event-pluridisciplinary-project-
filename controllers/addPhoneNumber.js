@@ -1,5 +1,7 @@
 const User = require('../models/user')
 
+//WORKING
+
 const AddPhoneNumber = (req , res) => {
         const {phoneNumber} = req.body
         const {_id} = req.user

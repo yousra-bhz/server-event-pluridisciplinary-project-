@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 const AdminModel = new mongoose.Schema({
     username : {
@@ -36,6 +37,21 @@ const AdminModel = new mongoose.Schema({
         usersRegistered : {
             type : Number,
             default :0
+        },
+        reports:{
+            type:[
+                {
+                    username:String,
+                    event:{
+                        type:ObjectId,
+                        ref:'Post'
+                    },
+                    reason:String,
+                    date : Date,
+
+                }
+            ]
+
         }
 })
 

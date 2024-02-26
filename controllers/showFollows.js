@@ -1,4 +1,5 @@
 const User = require('../models/user');
+//WORKING
 
 const showFollows = async (req, res) => {
     const { id } = req.user;

@@ -3,6 +3,8 @@ const Admin = require('../models/admin.js')
 const nodemailer = require('nodemailer');
 const Mailgen = require('mailgen');
 
+//WORKING
+
 const addPost = (req, res) => {
     const { title ,date, place, link, category , localisation } = req.body;
     

@@ -3,6 +3,8 @@ const User = require('../models/user.js');
 const Admin = require('../models/admin')
 const bcrypt = require('bcrypt');
 
+//WORKING
+
 const register = async (req, res) => {
     const { username, email, password, preOne, preTwo, preThree } = req.body;
     

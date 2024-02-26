@@ -1,34 +1,13 @@
-const Post = require('../models/post');
-const User = require('../models/user');
+const Post = require('../models/post')
 
-const DeleteEvent = async (req, res) => {
-    try {
+//this function is used to deleted a passed event
+//for upcoming events(cancel event) we use another function to cancel event
+const DeleteEventByUser = async (req , res) => {
+              const {id} = req.params
 
-        const url = 'mongodb://127.0.0.1:27017/your_database_name';
-        const dbName = 'your_database_name';
-        const collectionName = 'users';
-        const { id } = req.params;
-        const db = client.db(dbName);
-        const collection = db.collection(collectionName);
+              await Post.findByIdAndDelete(id).then(() => res.status(200).send('event deleted succesfully'))
+              .catch((err) => console.log(err))
+}
 
-          // Remove the event from each user's likedEvents arr
 
-        collection.find().forEach((document) => {
-            // Faites quelque chose avec chaque document
-            document.likedEvents.filter((event) => event.id !== id)
-            
-          });
-
-      
-
-        // Delete the event from the Post collection
-        await Post.findByIdAndDelete(id);
-
-        res.status(200).send('Event deleted successfully from the database');
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Unable to delete the event from the database');
-    }
-};
-
-module.exports = DeleteEvent;
+module.exports = DeleteEventByUser

@@ -1,10 +1,12 @@
 const Post = require('../models/post');
 const User = require('../models/user');
 
+//WORKING
+
 const LikeEvent = async(req , res) => {
     const {_id , username} = req.user;
     const {id} = req.params;
-    const EventNotif = await Post.findById(id).populate('organizer');
+
 
     Post.findByIdAndUpdate(id , {
         $inc : {likes : 1}

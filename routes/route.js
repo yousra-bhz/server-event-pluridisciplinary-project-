@@ -1,10 +1,12 @@
 const express = require('express')
 const router = express.Router();
+
+
 //import all controllers
 const register = require('../controllers/register');
 const login = require('../controllers/login');
 const getUser = require('../controllers/getUser');
-const updateUser = require('../controllers/updateUser');
+const UpdateEvent = require('../controllers/updateEvent');
 const generateOTP = require('../controllers/generateOTP');
 const verifyOTP = require('../controllers/verifyOTP');
 const createResetSession = require('../controllers/createResetSession');
@@ -30,6 +32,7 @@ const Unfollow = require('../controllers/unfollow')
 const FeedBack = require('../controllers/feedback')
 const Clear = require('../controllers/clearNotif')
 const RefuseEventByAdmin = require('../controllers/refuseEvent')
+const Interested = require('../controllers/interested')
 
 //IMPORTING CONTROLLERS
 const verifyUser = require('../middleware/verifyUser')
@@ -41,13 +44,11 @@ const Locals = require('../middleware/locals')
 //POST ROUTES
 router.route('/register').post(register)
 router.route('/registerMail').post(Mailer)
-router.route('/euthenticate').post((req , res) => {
-    res.end()
-})
 router.route('/login').post(login);
 router.route('/addPost').post(Auth ,posting ) 
 router.route('/AddYourPhoneNumber').post(Auth,AddPhoneNumber)
 router.route('/AddFeedBack/:id').post(Auth , FeedBack)
+
 
 
 
@@ -58,9 +59,6 @@ router.route('/verifyOTP').get( verifyUser ,verifyOTP)
 router.route('/createResetSession').get(createResetSession)
 router.route('/gettingusers').get(users)
 router.route('/gettingposts').get(posts)
-router.route('/protected').get(Auth ,(req,res) => {
-    res.json(req.user)
-})
 router.route('/feed').get(Auth , Feed)
 router.route('/posts/:postId').get(getPost)
 router.route('/yourPosts').get(Auth, userPosts)
@@ -80,6 +78,8 @@ router.route('dislike/:id').put(Auth , DisLikeEvent)
 router.route('/followuser/:id').put( Auth , FollowUser)
 router.route('/unfollowuser/:id').put(Auth , Unfollow)
 router.route('/clearNotif').put(Auth , Clear)
+router.route('/Interested/:id').put(Auth , Interested)
+router.route('/UpdateEvent/:id').put(Auth , UpdateEvent)
 
 //DELETE METHODS
 router.route('/deletEvent/:id').delete(Auth , deletEvent)

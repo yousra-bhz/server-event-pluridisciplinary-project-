@@ -49,6 +49,10 @@ const PostModel = new mongoose.Schema({
         username : String,
         message:String
     }],
+    interested : [{
+        type : ObjectId,
+        ref:'User'
+    }]
 
 })
 

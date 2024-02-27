@@ -4,14 +4,13 @@ const User = require('../models/user');
 //WORKING
 
 const LikeEvent = async(req , res) => {
-    const {_id , username} = req.user;
+    const {_id } = req.user;
     const {id} = req.params;
 
 
     Post.findByIdAndUpdate(id , {
         $inc : {likes : 1}
     }).then(() => {
-        console.log(Event);
         User.findByIdAndUpdate(_id , {
             $addToSet :{likedEvents :id}
         }).then(() => {

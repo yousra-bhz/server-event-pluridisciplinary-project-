@@ -2,10 +2,10 @@ const User = require('../models/user');
 //WORKING
 
 const showFollows = async (req, res) => {
-    const { id } = req.user;
+    const { _id } = req.user;
 
     try {
-        const userFound = await User.findById(id);
+        const userFound = await User.findById(_id);
 
         if (!userFound) {
             return res.status(404).send('User not found');

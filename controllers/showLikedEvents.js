@@ -1,8 +1,8 @@
 const User = require('../models/user');
 //WORKING
 const showLikedEvents = async(req , res) => {
-        const {userId} = req.user;
-        await User.findById(userId).then((userFound) => {
+        const {_id} = req.user;
+        await User.findById(_id).then((userFound) => {
                 const likedEvents = userFound.likedEvents;
                 res.status(200).send({
                     message : 'these are your liked events',

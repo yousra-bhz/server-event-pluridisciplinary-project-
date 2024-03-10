@@ -1,70 +1,100 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const {ObjectId} = mongoose.Schema.Types;
+const { ObjectId } = mongoose.Schema.Types;
 
-
-const UserSchema = new Schema ({
-    username : {
-        type : String,
-        required : [true , "please provide unique Username"],
-        unique : [false]
+const UserSchema = new Schema({
+    username: {
+        type: String,
+        required: [true, "please provide unique Username"],
+        unique: false
     },
-    email : {
-        type : String,
-        required : [true , "please provide a unique email"],
-        unique : true
+    email: {
+        type: String,
+        required: [true, "please provide a unique email"],
+        unique: true
     },
-    password : {
-        type : String,
-        required : [true , "please provide a password"],
-        unique : false
+    password: {
+        type: String,
+        required: [true, "please provide a password"],
+        unique: false
     },
-    preOne : {
-        type : String,
+    preOne: {
+        type: String,
     },
-    preTwo : {
-        type : String,
+    preTwo: {
+        type: String,
     },
-    preThree : {
-        type : String,
+    preThree: {
+        type: String,
     },
-    warnings:{
-        type :Number,
-        default:0
+    preFour: {
+        type: String,
     },
-    phoneNumber:{
-        type:String,
-        default:"",
-        required:false
+    preFive: {
+        type: String,
     },
-    likedEvents:[ 
+    preSix: {
+        type: String,
+    },
+    warnings: {
+        type: Number,
+        default: 0
+    },
+    phoneNumber: {
+        type: String,
+        default: "",
+        required: false
+    },
+    likedEvents: [
         {
-        type: ObjectId,
-        ref:'Post'
-    },
+            type: ObjectId,
+            ref: 'Post'
+        },
     ],
-    follows:[
+    follows: [
         {
-            type:ObjectId,
-            ref:'User'
+            type: ObjectId,
+            ref: 'User'
         }
     ],
-    followers:[
+    followers: [
         {
-            type:ObjectId,
-            ref:'User'
+            type: ObjectId,
+            ref: 'User'
         }
     ],
-    notification:[
-        {   
-            date : Date,
-            message:String,
+    notificationUser: [
+        {
+            user: {
+                type: ObjectId,
+                ref: 'User'
+            },
+            date: {
+                type: Date
+            },
+            message: {
+                type: String
+            }
         }
     ],
-    image : {
-        type : String,
-        required:false,
+    notificationEvent: [
+        {
+            event: {
+                type: ObjectId,
+                ref: 'Post'
+            },
+            date: {
+                type: Date
+            },
+            message: {
+                type: String
+            }
+        }
+    ],
+    image: {
+        type: String,
+        required: false,
     }
-})
+});
 
-module.exports = mongoose.model("User" , UserSchema)
+module.exports = mongoose.model("User", UserSchema);

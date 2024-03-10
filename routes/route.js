@@ -34,6 +34,7 @@ const Clear = require('../controllers/clearNotif')
 const RefuseEventByAdmin = require('../controllers/refuseEvent')
 const Interested = require('../controllers/interested')
 
+
 //IMPORTING CONTROLLERS
 const verifyUser = require('../middleware/verifyUser')
 const Auth = require('../middleware/auth')
@@ -66,6 +67,7 @@ router.route('/waitingPosts').get(WaitingPost)
 router.route('/likedEvents').get(Auth , LikedEvents)
 router.route('/yourFollows').get(Auth , Follows)
 router.route('/yourFollowers').get(Auth , Followers)
+
 
 
 

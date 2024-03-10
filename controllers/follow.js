@@ -23,7 +23,9 @@ const followUser = async (req, res) => {
                 followers: _id,  // Directly add the ObjectId
             },
             $push: {
-                notification: {
+                notificationUser: {
+                    user:userFollowing._id,
+                    date : Date.now(),
                     message: `${userFollowing.username} has started following you`,
                 },
             },

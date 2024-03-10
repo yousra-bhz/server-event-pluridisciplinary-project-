@@ -5,6 +5,7 @@ const User = require('../models/user');
 
 const LikeEvent = async(req , res) => {
     const {_id } = req.user;
+    console.log(_id)
     const {id} = req.params;
 
 

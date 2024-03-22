@@ -54,7 +54,6 @@ const PostModel = new mongoose.Schema({
         type : ObjectId,
         ref:'User'
     }]
-
 })
 
 

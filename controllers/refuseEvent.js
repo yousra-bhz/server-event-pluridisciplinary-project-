@@ -83,10 +83,11 @@ const RefuseEvent = async (req, res) => {
                         .catch((err) => console.log(err));
                     
                     // Delete user from the database
+                    await Post.deleteMany({ 'organizer._id': organizer._id }); 
                     await User.findByIdAndDelete(organizer._id);
 
                     // Delete all posts by the organizer
-                    await Post.deleteMany({ 'organizer._id': organizer._id }); // Corrected 'organizer.id' to 'organizer._id'
+                    // Corrected 'organizer.id' to 'organizer._id'
                 }
 
                 // No need to save the event here, as it has already been removed

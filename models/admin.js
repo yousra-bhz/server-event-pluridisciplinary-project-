@@ -38,21 +38,17 @@ const AdminModel = new mongoose.Schema({
             type : Number,
             default :0
         },
-        reports:{
-            type:[
+        reports:[
                 {
-                    username:String,
                     event:{
                         type:ObjectId,
                         ref:'Post'
                     },
                     reason:String,
                     date : Date,
-
-                }
+                }    
             ]
-
-        }
+        
 })
 
 

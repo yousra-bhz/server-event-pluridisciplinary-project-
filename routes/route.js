@@ -33,6 +33,10 @@ const FeedBack = require('../controllers/feedback')
 const Clear = require('../controllers/clearNotif')
 const RefuseEventByAdmin = require('../controllers/refuseEvent')
 const Interested = require('../controllers/interested')
+const UpdateUser = require('../controllers/updateUser')
+const CancelEvent = require('../controllers/cancelEvent')
+const RepportEvent = require('../controllers/reportEvent')
+const WarnUser = require('../controllers/warnUser')
 
 
 //IMPORTING CONTROLLERS
@@ -49,6 +53,7 @@ router.route('/login').post(login);
 router.route('/addPost').post(Auth ,posting ) 
 router.route('/AddYourPhoneNumber').post(Auth,AddPhoneNumber)
 router.route('/AddFeedBack/:id').post(Auth , FeedBack)
+router.route('/ReportEvent/:id').post(Auth , RepportEvent)
 
 
 
@@ -82,6 +87,9 @@ router.route('/unfollowuser/:id').put(Auth , Unfollow)
 router.route('/clearNotif').put(Auth , Clear)
 router.route('/Interested/:id').put(Auth , Interested)
 router.route('/UpdateEvent/:id').put(Auth , UpdateEvent)
+router.route('/UpdateYourInfos').put(Auth , UpdateUser)
+router.route('/CancelEvent/:id').put(Auth , CancelEvent)
+router.route('/WarnUser/:id').put(WarnUser)
 
 //DELETE METHODS
 router.route('/deletEvent/:id').delete(Auth , deletEvent)

@@ -37,6 +37,7 @@ const UpdateUser = require('../controllers/updateUser')
 const CancelEvent = require('../controllers/cancelEvent')
 const RepportEvent = require('../controllers/reportEvent')
 const WarnUser = require('../controllers/warnUser')
+const RandomPosts = require('../controllers/getRandomEvents')
 
 
 //IMPORTING CONTROLLERS
@@ -72,6 +73,7 @@ router.route('/waitingPosts').get(WaitingPost)
 router.route('/likedEvents').get(Auth , LikedEvents)
 router.route('/yourFollows').get(Auth , Follows)
 router.route('/yourFollowers').get(Auth , Followers)
+router.route('/Home').get(RandomPosts)
 
 
 

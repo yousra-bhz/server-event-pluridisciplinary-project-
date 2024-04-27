@@ -8,12 +8,13 @@ const resetPassword = async (req, res) => {
   }
 
   try {
-    const { username, password } = req.body;
+    const {_id} = req.user;
+    const {password } = req.body;
 
-    const existingUser = await User.findOne({ username });
+    const existingUser = await User.findOne({ _id });
 
     if (!existingUser) {
-      return res.json('This username does not seem to exist in the database');
+      return res.json('This user does not seem to exist in the database');
     }
 
     if (!password) {

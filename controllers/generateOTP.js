@@ -7,8 +7,9 @@ const generateOTP = async(req , res) =>{
 req.app.locals.OTP =  await otpGenerator.generate(6 , {lowerCaseAlphabets :false , upperCaseAlphabets : false , specialChars : false} );
 const OTP = req.app.locals.OTP
   //send the OTP to the user
-const { username} = req.query;
-const user = await User.findOne({username})
+const {_id} = req.user;
+        const user =  await User.findById(_id) ;
+        if(user){
             // Create mail generator instance
             const mailGenerator = new Mailgen({
                 theme: "default",
@@ -21,7 +22,7 @@ const user = await User.findOne({username})
             // Generate email content
             const Email = {
                 body: {
-                    name: username,
+                    name: user.username,
                     intro: `<p>Hello, here is your OTP <strong style="color: red;">${OTP}</strong></p>`,
                     outro: "Need help? Just reply to this email."
                 }
@@ -59,6 +60,7 @@ const user = await User.findOne({username})
           }
 
   res.status(201).send({ code : req.app.locals.OTP })
+        }
 }
 
 module.exports = generateOTP

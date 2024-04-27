@@ -41,10 +41,18 @@ const RandomPosts = require('../controllers/getRandomEvents')
 
 
 //IMPORTING CONTROLLERS
-const verifyUser = require('../middleware/verifyUser')
 const Auth = require('../middleware/auth')
-const Locals = require('../middleware/locals')
 
+//verifying the OTPcode
+const checkOTPVerification = (req, res, next) => {
+    if (req.app.locals.OTPVerified) {
+        // OTP has been successfully verified
+        next();
+    } else {
+        // OTP verification failed
+        res.status(403).json({ error: 'Unauthorized access' });
+    }
+}; 
 
 
 //POST ROUTES
@@ -61,8 +69,8 @@ router.route('/ReportEvent/:id').post(Auth , RepportEvent)
 
 //GET METHODS
 router.route('/users/:id').get(getUser)
-router.route('/generateOTP').get(verifyUser ,Locals, generateOTP)
-router.route('/verifyOTP').get( verifyUser ,verifyOTP)
+router.route('/generateOTP').get(Auth , generateOTP)
+router.route('/verifyOTP').get( Auth ,verifyOTP)
 router.route('/createResetSession').get(createResetSession)
 router.route('/gettingusers').get(users)
 router.route('/gettingposts').get(posts)
@@ -80,7 +88,7 @@ router.route('/Home').get(RandomPosts)
 
 //PUT METHODS
 //router.route('/updateUser').put(updateUser)
-router.route('/resetPassword').put( verifyUser ,resetPassword)
+router.route('/resetPassword').put( checkOTPVerification ,resetPassword)
 router.route('/approuveEvent/:id').put(Approuve)
 router.route('/likeEvent/:id').put( Auth , LikeEvent)
 router.route('dislike/:id').put(Auth , DisLikeEvent)

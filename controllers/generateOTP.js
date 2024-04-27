@@ -4,12 +4,13 @@ const nodemailer = require('nodemailer');
 const Mailgen = require('mailgen')
 
 const generateOTP = async(req , res) =>{
-req.app.locals.OTP =  await otpGenerator.generate(6 , {lowerCaseAlphabets :false , upperCaseAlphabets : false , specialChars : false} );
-const OTP = req.app.locals.OTP
+const OTPcode =  await otpGenerator.generate(6 , {lowerCaseAlphabets :false , upperCaseAlphabets : false , specialChars : false} );
   //send the OTP to the user
 const {_id} = req.user;
         const user =  await User.findById(_id) ;
         if(user){
+            user.OTPcode = OTPcode;
+            await user.save();
             // Create mail generator instance
             const mailGenerator = new Mailgen({
                 theme: "default",
@@ -23,7 +24,7 @@ const {_id} = req.user;
             const Email = {
                 body: {
                     name: user.username,
-                    intro: `<p>Hello, here is your OTP <strong style="color: red;">${OTP}</strong></p>`,
+                    intro: `<p>Hello, here is your OTP <strong style="color: red;">${OTPcode}</strong></p>`,
                     outro: "Need help? Just reply to this email."
                 }
             };

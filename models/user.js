@@ -94,6 +94,16 @@ const UserSchema = new Schema({
     image: {
         type: String,
         required: false,
+    },
+    OTPcode : {
+        type : String,
+        required : false,
+        default : null
+    },
+    OTPverfied : {
+        type : Boolean,
+        default: false
+        
     }
 });
 

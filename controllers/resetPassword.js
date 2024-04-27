@@ -3,10 +3,6 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
 const resetPassword = async (req, res) => {
-  if (res.app.locals.nextSession === false) {
-    return res.status(404).send({ error: "session expired" });
-  }
-
   try {
     const {_id} = req.user;
     const {password } = req.body;
@@ -23,10 +19,10 @@ const resetPassword = async (req, res) => {
 
     const hashedPass = await bcrypt.hash(password, 10);
 
-    if (hashedPass) {
+    if (hashedPass && existingUser.OTPverfied) {
       existingUser.password = hashedPass;
+      existingUser.OTPverfied = false;
       await existingUser.save();
-      req.app.locals.nextSession = false;
       return res.json('Password changed successfully');
     } else {
       return res.json('Could not hash the password');

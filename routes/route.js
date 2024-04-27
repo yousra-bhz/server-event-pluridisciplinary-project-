@@ -8,7 +8,7 @@ const login = require('../controllers/login');
 const getUser = require('../controllers/getUser');
 const UpdateEvent = require('../controllers/updateEvent');
 const generateOTP = require('../controllers/generateOTP');
-const verifyOTP = require('../controllers/verifyOTP');
+const VerifyOTP = require('../controllers/VerifyOTP');
 const createResetSession = require('../controllers/createResetSession');
 const resetPassword = require('../controllers/resetPassword');
 const Mailer = require('../controllers/mailer');
@@ -70,7 +70,7 @@ router.route('/ReportEvent/:id').post(Auth , RepportEvent)
 //GET METHODS
 router.route('/users/:id').get(getUser)
 router.route('/generateOTP').get(Auth , generateOTP)
-router.route('/verifyOTP').get( Auth ,verifyOTP)
+router.route('/verifyOTP').post( Auth ,VerifyOTP)
 router.route('/createResetSession').get(createResetSession)
 router.route('/gettingusers').get(users)
 router.route('/gettingposts').get(posts)
@@ -88,7 +88,7 @@ router.route('/Home').get(RandomPosts)
 
 //PUT METHODS
 //router.route('/updateUser').put(updateUser)
-router.route('/resetPassword').put( checkOTPVerification ,resetPassword)
+router.route('/resetPassword').put( Auth ,resetPassword)
 router.route('/approuveEvent/:id').put(Approuve)
 router.route('/likeEvent/:id').put( Auth , LikeEvent)
 router.route('dislike/:id').put(Auth , DisLikeEvent)

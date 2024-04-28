@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 //WORKING
 
 const register = async (req, res) => {
-    const { username, email, password, preOne, preTwo, preThree, preFour, preFive , preSix } = req.body;
+    const { username, email, password} = req.body;
     
 
     try {
@@ -50,12 +50,6 @@ const register = async (req, res) => {
             email,
             username,
             password: hashedPass,
-            preOne,
-            preTwo,
-            preThree,
-            preFour,
-            preFive,
-            preSix
         });
 
         await newUser.save().then(() => {

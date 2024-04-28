@@ -9,6 +9,9 @@ const Feed = (req, res) => {
       { category: preOne },
       { category: preTwo },
       { category: preThree },
+      { category: preFour },
+      { category: preFive },
+      { category: preSix },
     ],
   };
 

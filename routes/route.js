@@ -63,14 +63,15 @@ router.route('/addPost').post(Auth ,posting )
 router.route('/AddYourPhoneNumber').post(Auth,AddPhoneNumber)
 router.route('/AddFeedBack/:id').post(Auth , FeedBack)
 router.route('/ReportEvent/:id').post(Auth , RepportEvent)
+router.route('/generateOTP').post( generateOTP)
+router.route('/verifyOTP').post(VerifyOTP)
 
 
 
 
 //GET METHODS
 router.route('/users/:id').get(getUser)
-router.route('/generateOTP').get(Auth , generateOTP)
-router.route('/verifyOTP').post( Auth ,VerifyOTP)
+
 router.route('/createResetSession').get(createResetSession)
 router.route('/gettingusers').get(users)
 router.route('/gettingposts').get(posts)
@@ -88,7 +89,7 @@ router.route('/Home').get(RandomPosts)
 
 //PUT METHODS
 //router.route('/updateUser').put(updateUser)
-router.route('/resetPassword').put( Auth ,resetPassword)
+router.route('/resetPassword').put(resetPassword)
 router.route('/approuveEvent/:id').put(Approuve)
 router.route('/likeEvent/:id').put( Auth , LikeEvent)
 router.route('dislike/:id').put(Auth , DisLikeEvent)

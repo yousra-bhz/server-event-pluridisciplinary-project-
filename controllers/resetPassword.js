@@ -4,10 +4,11 @@ const User = require('../models/user');
 
 const resetPassword = async (req, res) => {
   try {
-    const {_id} = req.user;
+    const email = req.app.locals.email = email;
+    
     const {password } = req.body;
 
-    const existingUser = await User.findOne({ _id });
+    const existingUser = await User.findOne(email);
 
     if (!existingUser) {
       return res.json('This user does not seem to exist in the database');

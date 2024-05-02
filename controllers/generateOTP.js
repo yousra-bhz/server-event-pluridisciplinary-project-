@@ -6,8 +6,9 @@ const Mailgen = require('mailgen')
 const generateOTP = async(req , res) =>{
 const OTPcode =  await otpGenerator.generate(6 , {lowerCaseAlphabets :false , upperCaseAlphabets : false , specialChars : false} );
   //send the OTP to the user
-const {_id} = req.user;
-        const user =  await User.findById(_id) ;
+const {email} = req.body;
+req.app.locals.email = email;
+        const user =  await User.findOne(email) ;
         if(user){
             user.OTPcode = OTPcode;
             await user.save();

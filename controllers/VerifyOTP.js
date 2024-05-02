@@ -3,8 +3,8 @@ const User = require('../models/user')
 
 const VerifyOTP  = async( req , res ) => {
         const {OTPcode} = req.body;
-        const {_id} = req.user;
-        const user = await User.findById(_id);
+        const email = req.app.locals.email = email;
+        const user = await User.findOne(email);
 
         if (user && user.OTPcode === OTPcode){
             user.OTPcode = null;

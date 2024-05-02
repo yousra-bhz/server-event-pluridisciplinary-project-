@@ -1,7 +1,5 @@
-const Post = require('../models/post')
 const Admin = require('../models/admin')
-const nodemailer = require('nodemailer')
-const Mailgen = require('mailgen')
+
 
 const RepportPost = (req , res) => {
 

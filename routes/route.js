@@ -38,21 +38,13 @@ const CancelEvent = require('../controllers/cancelEvent')
 const RepportEvent = require('../controllers/reportEvent')
 const WarnUser = require('../controllers/warnUser')
 const RandomPosts = require('../controllers/getRandomEvents')
+const DeleteEventByAdminReport = require('../controllers/deleteEventByAdmin(report)')
 
 
 //IMPORTING CONTROLLERS
 const Auth = require('../middleware/auth')
 
-//verifying the OTPcode
-const checkOTPVerification = (req, res, next) => {
-    if (req.app.locals.OTPVerified) {
-        // OTP has been successfully verified
-        next();
-    } else {
-        // OTP verification failed
-        res.status(403).json({ error: 'Unauthorized access' });
-    }
-}; 
+
 
 
 //POST ROUTES
@@ -105,5 +97,6 @@ router.route('/WarnUser/:id').put(WarnUser)
 //DELETE METHODS
 router.route('/deletEvent/:id').delete(Auth , deletEvent)
 router.route('/refuseEvent/:id').delete(RefuseEventByAdmin)
+router.route('/deleteReportedEvent/:id').delete(DeleteEventByAdminReport)
 
 module.exports = router;

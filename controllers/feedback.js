@@ -1,4 +1,5 @@
 const Post = require('../models/post')
+const User = require('../models/user')
 
 
 //WORKING
@@ -7,15 +8,16 @@ const Post = require('../models/post')
 
 const sendFeedback = async (req,res)=>{
     try{
-        const {username} = req.user;
+        const {_id} = req.user; //this is the uder id
+        const user = await User.findById(_id)
         const {message} = req.body;
-        const { id }= req.params
+        const { id }= req.params // this is the event id
         Post.findByIdAndUpdate(
             id,
             {
                 $push: { feedbacks: { 
                     date : Date.now(),
-                    username: username,
+                    user : user,
                     message:message 
                 }
             }

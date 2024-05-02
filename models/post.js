@@ -47,8 +47,7 @@ const PostModel = new mongoose.Schema({
     },
     feedbacks: [{
         date : Date,
-        username : String,
-        image : String,
+        user : ObjectId,
         message:String
     }],
     interested : [{

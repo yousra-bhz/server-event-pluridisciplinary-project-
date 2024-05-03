@@ -39,6 +39,7 @@ const RepportEvent = require('../controllers/reportEvent')
 const WarnUser = require('../controllers/warnUser')
 const RandomPosts = require('../controllers/getRandomEvents')
 const DeleteEventByAdminReport = require('../controllers/deleteEventByAdmin(report)')
+const DeleteReport = require('../controllers/deleteReports')
 
 
 //IMPORTING CONTROLLERS
@@ -98,5 +99,6 @@ router.route('/WarnUser/:id').put(WarnUser)
 router.route('/deletEvent/:id').delete(Auth , deletEvent)
 router.route('/refuseEvent/:id').delete(RefuseEventByAdmin)
 router.route('/deleteReportedEvent/:id').delete(DeleteEventByAdminReport)
+router.route('/deleteReport/:id').delete(Auth , DeleteReport)
 
 module.exports = router;

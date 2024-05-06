@@ -40,6 +40,7 @@ const WarnUser = require('../controllers/warnUser')
 const RandomPosts = require('../controllers/getRandomEvents')
 const DeleteEventByAdminReport = require('../controllers/deleteEventByAdmin(report)')
 const DeleteReport = require('../controllers/deleteReports')
+const HelpUser = require('../controllers/help')
 
 
 //IMPORTING CONTROLLERS
@@ -58,13 +59,9 @@ router.route('/AddFeedBack/:id').post(Auth , FeedBack)
 router.route('/ReportEvent/:id').post(Auth , RepportEvent)
 router.route('/generateOTP').post( generateOTP)
 router.route('/verifyOTP').post(VerifyOTP)
-
-
-
-
+router.route('/help').post(HelpUser)
 //GET METHODS
 router.route('/users/:id').get(getUser)
-
 router.route('/createResetSession').get(createResetSession)
 router.route('/gettingusers').get(users)
 router.route('/gettingposts').get(posts)
@@ -76,12 +73,7 @@ router.route('/likedEvents').get(Auth , LikedEvents)
 router.route('/yourFollows').get(Auth , Follows)
 router.route('/yourFollowers').get(Auth , Followers)
 router.route('/Home').get(RandomPosts)
-
-
-
-
 //PUT METHODS
-//router.route('/updateUser').put(updateUser)
 router.route('/resetPassword').put(resetPassword)
 router.route('/approuveEvent/:id').put(Approuve)
 router.route('/likeEvent/:id').put( Auth , LikeEvent)
@@ -94,7 +86,6 @@ router.route('/UpdateEvent/:id').put(Auth , UpdateEvent)
 router.route('/UpdateYourInfos').put(Auth , UpdateUser)
 router.route('/CancelEvent/:id').put(Auth , CancelEvent)
 router.route('/WarnUser/:id').put(WarnUser)
-
 //DELETE METHODS
 router.route('/deletEvent/:id').delete(Auth , deletEvent)
 router.route('/refuseEvent/:id').delete(RefuseEventByAdmin)

@@ -10,7 +10,7 @@ const AdminModel = new mongoose.Schema({
         email : {
                 type : String,
                 required : true,
-                default: "bouhrizdaidjyousra@gmail.com"
+                default: "yousra@gmail.com"
         },
 
         password : {
@@ -47,7 +47,16 @@ const AdminModel = new mongoose.Schema({
                     reason:String,
                     date : Date,
                 }    
-            ]
+            ],
+        
+        Helps:[
+            {
+                email :String,
+                paragraph : String,
+                date:Date,
+            }
+        ]
+
         
 })
 

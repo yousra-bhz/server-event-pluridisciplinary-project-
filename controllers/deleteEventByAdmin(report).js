@@ -1,5 +1,5 @@
 const Post = require('../models/post')
-const Admin = require('./models/user')
+const Admin = require('../models/admin')
 
 
 const DeleteEventByAdminReport = async(req , res) => {

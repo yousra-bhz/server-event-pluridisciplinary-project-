@@ -9,7 +9,6 @@ const getUser = require('../controllers/getUser');
 const UpdateEvent = require('../controllers/updateEvent');
 const generateOTP = require('../controllers/generateOTP');
 const VerifyOTP = require('../controllers/VerifyOTP');
-const createResetSession = require('../controllers/createResetSession');
 const resetPassword = require('../controllers/resetPassword');
 const Mailer = require('../controllers/mailer');
 const posting = require('../controllers/addPost')
@@ -43,12 +42,9 @@ const DeleteReport = require('../controllers/deleteReports')
 const HelpUser = require('../controllers/help')
 
 
-//IMPORTING CONTROLLERS
+//IMPORTING middlewares
 const Auth = require('../middleware/auth')
-
-
-
-
+const AuthAdmin = require('../middleware/authAdmin')
 //POST ROUTES
 router.route('/register').post(register)
 router.route('/registerMail').post(Mailer)
@@ -62,20 +58,19 @@ router.route('/verifyOTP').post(VerifyOTP)
 router.route('/help').post(HelpUser)
 //GET METHODS
 router.route('/users/:id').get(getUser)
-router.route('/createResetSession').get(createResetSession)
 router.route('/gettingusers').get(users)
 router.route('/gettingposts').get(posts)
 router.route('/feed').get(Auth , Feed)
 router.route('/posts/:postId').get(getPost)
 router.route('/yourPosts').get(Auth, userPosts)
-router.route('/waitingPosts').get(WaitingPost)
+router.route('/waitingPosts').get(Auth , AuthAdmin ,WaitingPost) //ADMIN
 router.route('/likedEvents').get(Auth , LikedEvents)
 router.route('/yourFollows').get(Auth , Follows)
 router.route('/yourFollowers').get(Auth , Followers)
 router.route('/Home').get(RandomPosts)
 //PUT METHODS
-router.route('/resetPassword').put(resetPassword)
-router.route('/approuveEvent/:id').put(Approuve)
+router.route('/resetPassword').put(Auth ,resetPassword)
+router.route('/approuveEvent/:id').put(Auth , AuthAdmin , Approuve)
 router.route('/likeEvent/:id').put( Auth , LikeEvent)
 router.route('dislike/:id').put(Auth , DisLikeEvent)
 router.route('/followuser/:id').put( Auth , FollowUser)
@@ -84,12 +79,13 @@ router.route('/clearNotif').put(Auth , Clear)
 router.route('/Interested/:id').put(Auth , Interested)
 router.route('/UpdateEvent/:id').put(Auth , UpdateEvent)
 router.route('/UpdateYourInfos').put(Auth , UpdateUser)
-router.route('/CancelEvent/:id').put(Auth , CancelEvent)
-router.route('/WarnUser/:id').put(WarnUser)
+router.route('/CancelEvent/:id').put(Auth , CancelEvent)  //cancel event by the user
+router.route('/WarnUser/:id').put(Auth , AuthAdmin ,WarnUser)
 //DELETE METHODS
-router.route('/deletEvent/:id').delete(Auth , deletEvent)
-router.route('/refuseEvent/:id').delete(RefuseEventByAdmin)
+router.route('/deletEvent/:id').delete(Auth , deletEvent)//delete event by user
+router.route('/deletEvent/:id').delete(Auth , deletEvent)//delete event by admin
+router.route('/refuseEvent/:id').delete( Auth , AuthAdmin ,RefuseEventByAdmin)
 router.route('/deleteReportedEvent/:id').delete(DeleteEventByAdminReport)
-router.route('/deleteReport/:id').delete(Auth , DeleteReport)
+router.route('/deleteReport/:id').delete(Auth ,AuthAdmin , DeleteReport)
 
 module.exports = router;

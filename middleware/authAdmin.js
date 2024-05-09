@@ -1,18 +1,30 @@
-const Admin = require('../models/admin')
+const Admin = require('../models/user')
 const jwt = require('jsonwebtoken')
-const JWTsecret = "NQ2VDian0W9dx0OSHSXQpIGgBA1uf6KYKlYajidiKBs="
-const User = require('../models/user')
+const JWTsecret = "NQ2VDian0W9dx0OSHSXQpIGgBA1uf6KYKlYajidiKBs=";
 
 
 const AuthAdmin  = async(req , res , next) => {
-        const {_id} = req.user;
-        const user = await User.findById(_id);
-        if(user.isAdmin){
-            next();
+    const {authorization} = req.headers
+    //authorization === Bearer ewefwegwrherhe
+    if(!authorization){
+    return res.status(401).json({error:"you must be logged in"})
+    }
+    const token = authorization.replace("Bearer ","")
+    jwt.verify(token,JWTsecret,(err,payload)=>{
+        if(err){  
+        res.status(401).json({error:"you should be logged in"})
         }
-        else {
-            res.status(500).send(" you must be an admin to perform this opearation")
-        }
+        console.log('payload');
+        console.log(payload);
+        const {userId} = payload
+        Admin.findById(userId).then(userdata=>{
+            req.user = userdata;
+            res.status(200).end('yes you are an admin')
+            next()
+        })
+        
+        
+    })
 
 }
 

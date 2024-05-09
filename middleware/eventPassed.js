@@ -1,4 +1,4 @@
-const Poqt = require('../models/post')
+const Post = require('../models/post')
 
 
 const EventPassed  = async(req , res , next) => {

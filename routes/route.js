@@ -46,6 +46,9 @@ const HelpUser = require('../controllers/help')
 const Auth = require('../middleware/auth')
 const AuthAdmin = require('../middleware/authAdmin')
 const EventPassed = require('../middleware/eventPassed')
+
+//Admin Auth testing
+router.route('/admintest').get(AuthAdmin)
 //POST ROUTES
 router.route('/register').post(register)
 router.route('/registerMail').post(Mailer)
@@ -64,14 +67,14 @@ router.route('/gettingposts').get(posts)
 router.route('/feed').get(Auth , Feed)
 router.route('/posts/:postId').get(getPost)
 router.route('/yourPosts').get(Auth, userPosts)
-router.route('/waitingPosts').get(Auth , AuthAdmin ,WaitingPost) //ADMIN
+router.route('/waitingPosts').get(AuthAdmin ,WaitingPost) //ADMIN
 router.route('/likedEvents').get(Auth , LikedEvents)
 router.route('/yourFollows').get(Auth , Follows)
 router.route('/yourFollowers').get(Auth , Followers)
 router.route('/Home').get(RandomPosts)
 //PUT METHODS
 router.route('/resetPassword').put(Auth ,resetPassword)
-router.route('/approuveEvent/:id').put(Auth , AuthAdmin , Approuve)
+router.route('/approuveEvent/:id').put(AuthAdmin , Approuve)
 router.route('/likeEvent/:id').put( Auth , LikeEvent)
 router.route('dislike/:id').put(Auth , DisLikeEvent)
 router.route('/followuser/:id').put( Auth , FollowUser)
@@ -84,9 +87,9 @@ router.route('/CancelEvent/:id').put(Auth , CancelEvent)  //cancel event by the 
 router.route('/WarnUser/:id').put(Auth , AuthAdmin ,WarnUser)
 //DELETE METHODS
 router.route('/deletEvent/:id').delete(Auth ,EventPassed , deletEvent)//delete event by user
-router.route('/deletEvent/:id').delete(Auth , AuthAdmin , EventPassed , deletEvent)//delete event by admin
-router.route('/refuseEvent/:id').delete( Auth , AuthAdmin ,RefuseEventByAdmin)
+router.route('/deletEvent/:id').delete(AuthAdmin , EventPassed , deletEvent)//delete event by admin
+router.route('/refuseEvent/:id').delete( AuthAdmin ,RefuseEventByAdmin)
 router.route('/deleteReportedEvent/:id').delete(DeleteEventByAdminReport)
-router.route('/deleteReport/:id').delete(Auth ,AuthAdmin , DeleteReport)
+router.route('/deleteReport/:id').delete(AuthAdmin , DeleteReport)
 
 module.exports = router;

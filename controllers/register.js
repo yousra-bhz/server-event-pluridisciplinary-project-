@@ -53,7 +53,7 @@ const register = async (req, res) => {
         });
 
         await newUser.save().then(() => {
-            const emailAdmin = "admin@gmail.com"
+            const emailAdmin = "Admin123@gmail.com"
             res.json({
                 status: "Success",
                 message: "User saved successfully"

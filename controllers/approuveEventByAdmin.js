@@ -16,7 +16,7 @@ const ApprouveEventByAdmin = async(req , res) => {
             console.log(organizer)
             foundevent.save().then(async () => {
                 console.log(foundevent)
-                const emailAdmin = "admin@gmail.com"
+                const emailAdmin = "Admin123@gmail.com"
                 await Admin.findOne({email : emailAdmin}).then((admin) => {
                     admin.eventsPerDay ++ 
                     admin.eventsPerMonth ++

@@ -2,6 +2,7 @@ const validator = require('validator');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
+const Admin = require('../models/admin')
 const JWTsecret = "NQ2VDian0W9dx0OSHSXQpIGgBA1uf6KYKlYajidiKBs=";
 //WORKING
 
@@ -21,10 +22,20 @@ const login = async (req, res) => {
         });
     }
 
-    if (email === "admin@gmail.com"){
-        if(password === "Admin"){
+    if (email === "Admin123@gmail.com"){
+        if(password === "Abc//2004"){
             console.log("this is the account of the admin");
-            return res.status(200).send('admin logged in succefully');
+            const token = jwt.sign({
+                userId: "663c98f206c059f0a5a64067",
+                username: "Admin"
+            }, JWTsecret);
+
+            return res.status(200).json({
+                status: "SUCCESS",
+                message: "Logged in successfully",
+                username: "Admin",
+                token
+            });
         }
         else {
             return res.status(501).send('it is not the right password for the admin ');

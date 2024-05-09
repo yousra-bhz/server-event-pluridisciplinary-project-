@@ -1,4 +1,4 @@
-const { CurrencyCodes } = require('validator/lib/isISO4217')
+
 const Post = require('../models/post')
 
 //this function is used to deleted a passed event

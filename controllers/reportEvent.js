@@ -7,6 +7,7 @@ const RepportPost = (req , res) => {
     //add a report to this event
     //send email to the person who reported to confirm that his report was send succesfully to the admin
     //const {email , username} = req.user
+    //if the event has passed you can report it
     const {id} = req.params
     const {reason} = req.body
 

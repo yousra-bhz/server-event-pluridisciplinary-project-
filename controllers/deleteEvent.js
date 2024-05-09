@@ -1,22 +1,20 @@
 
 const Post = require('../models/post')
 
-//this function is used to deleted a passed event
-//for upcoming events(cancel event) we use another function to cancel event
-const DeleteEventByUser = async (req , res) => {
-                    const {id} = req.params
-                    const post = await Post.findById(id)
-                    const postDate = post.date
-                    const currentDate = new Date();
-                    if(postDate > currentDate){
-                        res.status(404).send("you can not delete this event")
-                    }
-                    else{
-                        await Post.findByIdAndDelete(id)
-                        es.status(404).send("event deleted")
-                    }
-            
+// This function is used to delete an event.
+// For canceling upcoming events, use another function.
+const DeleteEventByUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedEvent = await Post.findByIdAndDelete(id);
+        if (!deletedEvent) {
+            return res.status(404).send('Event not found');
+        }
+        return res.status(200).send('Event deleted successfully');
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Internal Server Error');
+    }
 }
 
-
-module.exports = DeleteEventByUser
+module.exports = DeleteEventByUser;

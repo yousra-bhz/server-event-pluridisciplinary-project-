@@ -45,6 +45,7 @@ const HelpUser = require('../controllers/help')
 //IMPORTING middlewares
 const Auth = require('../middleware/auth')
 const AuthAdmin = require('../middleware/authAdmin')
+const EventPassed = require('../middleware/eventPassed')
 //POST ROUTES
 router.route('/register').post(register)
 router.route('/registerMail').post(Mailer)
@@ -82,8 +83,8 @@ router.route('/UpdateYourInfos').put(Auth , UpdateUser)
 router.route('/CancelEvent/:id').put(Auth , CancelEvent)  //cancel event by the user
 router.route('/WarnUser/:id').put(Auth , AuthAdmin ,WarnUser)
 //DELETE METHODS
-router.route('/deletEvent/:id').delete(Auth , deletEvent)//delete event by user
-router.route('/deletEvent/:id').delete(Auth , deletEvent)//delete event by admin
+router.route('/deletEvent/:id').delete(Auth ,EventPassed , deletEvent)//delete event by user
+router.route('/deletEvent/:id').delete(Auth , AuthAdmin , EventPassed , deletEvent)//delete event by admin
 router.route('/refuseEvent/:id').delete( Auth , AuthAdmin ,RefuseEventByAdmin)
 router.route('/deleteReportedEvent/:id').delete(DeleteEventByAdminReport)
 router.route('/deleteReport/:id').delete(Auth ,AuthAdmin , DeleteReport)

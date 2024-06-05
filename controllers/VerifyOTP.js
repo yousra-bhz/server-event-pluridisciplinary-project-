@@ -3,7 +3,7 @@ const User = require('../models/user')
 
 const VerifyOTP  = async( req , res ) => {
         const {OTPcode} = req.body;
-        const email = req.app.locals.email = email;
+        const email = req.app.locals.email ;
         const user = await User.findOne(email);
 
         if (user && user.OTPcode === OTPcode){

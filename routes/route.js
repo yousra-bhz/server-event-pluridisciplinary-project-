@@ -40,6 +40,7 @@ const RandomPosts = require('../controllers/getRandomEvents')
 const DeleteEventByAdminReport = require('../controllers/deleteEventByAdmin(report)')
 const DeleteReport = require('../controllers/deleteReports')
 const HelpUser = require('../controllers/help')
+const EventPerCategory = require('../controllers/EventPerCategory')
 
 
 //IMPORTING middlewares
@@ -72,6 +73,7 @@ router.route('/likedEvents').get(Auth , LikedEvents)
 router.route('/yourFollows').get(Auth , Follows)
 router.route('/yourFollowers').get(Auth , Followers)
 router.route('/Home').get(RandomPosts)
+route.route('/Category').get(EventPerCategory)
 //PUT METHODS
 router.route('/resetPassword').put(Auth ,resetPassword)
 router.route('/approuveEvent/:id').put(AuthAdmin , Approuve)
